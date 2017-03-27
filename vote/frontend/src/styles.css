@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+/* Pen-specific styles */
+html, body {
+  height: 100%;
+}
+
+body {
+  color: black;
+  font-family: sans-serif;
+  font-size: 1.25rem;
+  line-height: 150%;
+  text-align: center;
+  background-color: #F7F8F9;
+}
