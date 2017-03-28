@@ -1,4 +1,4 @@
-package io.vertx.example.vote;
+package fr.treeptik.vertx.vote;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;

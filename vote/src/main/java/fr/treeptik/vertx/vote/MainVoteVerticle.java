@@ -1,8 +1,8 @@
-package io.vertx.example.vote;
+package fr.treeptik.vertx.vote;
 
 
+import fr.treeptik.vertx.vote.utils.MultipleFutures;
 import io.vertx.core.*;
-import io.vertx.example.utils.MultipleFutures;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by guillaumeUnice on 24/03/17.
  */
-public class WebServer extends AbstractVerticle {
+public class MainVoteVerticle extends AbstractVerticle {
 
     public static final int REDIS_PORT = 8889;
 
@@ -24,7 +24,6 @@ public class WebServer extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> future) {
-
 
         MultipleFutures dbDeployments = new MultipleFutures();
         dbDeployments.add(this::deployRedis);

@@ -1,5 +1,4 @@
-package io.vertx.example.utils;
-
+package fr.treeptik.vertx.vote.utils;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
