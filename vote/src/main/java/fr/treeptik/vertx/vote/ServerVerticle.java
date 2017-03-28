@@ -43,7 +43,7 @@ public class ServerVerticle extends AbstractVerticle {
 
         router.route().handler(corsHandler);
         router.route().handler(CookieHandler.create());
-        router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx, SESSION, 10000)));
+        router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
         router.route().handler(BodyHandler.create());
 
         router.route().failureHandler(ErrorHandler.create(true));
@@ -101,12 +101,14 @@ public class ServerVerticle extends AbstractVerticle {
     }
 
     private String checkID(RoutingContext context) {
-        String voteId = context.getCookie(VOTE).getValue();
-
-        if(voteId == null) {
+        Cookie cookie = context.getCookie(VOTE);
+        if (cookie != null) {
+            return cookie.getValue();
+        } else {
             SecureRandom random = new SecureRandom();
-            context.addCookie(Cookie.cookie(VOTE, new BigInteger(130, random).toString(16).substring(0, 16)));
+            String biscuit = new BigInteger(130, random).toString(16).substring(0, 16);
+            context.addCookie(Cookie.cookie(VOTE, biscuit));
+            return biscuit;
         }
-        return voteId;
     }
 }
