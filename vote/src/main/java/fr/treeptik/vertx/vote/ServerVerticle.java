@@ -19,7 +19,7 @@ import java.net.UnknownHostException;
 import java.security.SecureRandom;
 
 import static io.netty.handler.codec.rtsp.RtspHeaders.Names.SESSION;
-
+import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 /**
  * Created by guillaumeUnice on 27/03/17.
  */
@@ -45,19 +45,22 @@ public class ServerVerticle extends AbstractVerticle {
         router.route().handler(CookieHandler.create());
         router.route().handler(SessionHandler.create(LocalSessionStore.create(vertx)));
         router.route().handler(BodyHandler.create());
-
+        
         router.route().failureHandler(ErrorHandler.create(true));
 
-        router.post("/")
+        StaticHandler staticHandler = StaticHandler.create();
+        staticHandler.setCachingEnabled(false);
+        router.route("/").handler(staticHandler);
+
+        router.post("/vote")
                 .handler(this::vote);
 
-        router.get("/")
+        router.get("/vote")
                 .handler(this::info);
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8080);
     }
-
 
     private void info (RoutingContext context) {
         checkID(context);

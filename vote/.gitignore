@@ -9,4 +9,5 @@ buildNumber.properties
 .mvn/timing.properties
 .idea/**
 vertx-start-project.iml
+webroot/
 
