@@ -12,6 +12,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.*;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.redis.RedisClient;
+import io.vertx.redis.RedisOptions;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -89,7 +90,7 @@ public class ServerVerticle extends AbstractVerticle {
         JsonObject requestBody = context.getBodyAsJson();
         final String vote = requestBody.getString(VOTE);
 
-        RedisClient redis = RedisClient.create(Vertx.vertx());
+        RedisClient redis = RedisClient.create(Vertx.vertx(), new RedisOptions().setHost("127.0.0.1"));
         JsonObject response = new JsonObject();
         response.put(VOTE_ID, checkID(context));
         response.put(VOTE, vote);
