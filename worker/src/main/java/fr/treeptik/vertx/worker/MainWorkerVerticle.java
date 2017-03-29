@@ -15,14 +15,13 @@ public class MainWorkerVerticle extends AbstractVerticle {
     @Override
     public void init(Vertx vertx, Context context) {
         super.init(vertx, context);
-        deploymentIds = new ArrayList<>(3);
+        deploymentIds = new ArrayList<>();
     }
 
     @Override
     public void start(Future<Void> future) {
 
         MultipleFutures dbDeployments = new MultipleFutures();
-        // dbDeployments.add(this::deployRedis);
         dbDeployments.add(this::deployWorker);
 
         dbDeployments.setHandler(result -> {
