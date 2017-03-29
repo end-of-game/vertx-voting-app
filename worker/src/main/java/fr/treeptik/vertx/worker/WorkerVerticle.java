@@ -2,12 +2,10 @@ package fr.treeptik.vertx.worker;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
-import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.PostgreSQLClient;
-import io.vertx.ext.jdbc.JDBCClient;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.sql.UpdateResult;
 import io.vertx.redis.RedisClient;
@@ -48,38 +46,9 @@ public class WorkerVerticle extends AbstractVerticle {
                 System.out.println("Connection or Operation Failed " + conn.cause());
             }
         });
-//        final JDBCClient jdbc = JDBCClient.createNonShared(vertx, new JsonObject()
-//                .put("url", "jdbc:postgresql://127.0.0.1:5432/postgres")
-//                .put("user", "postgres")
-////                .put("password", "abc2015")
-//        );
-//        System.out.println("Connection or Operation Failed ");
-//        jdbc.getConnection(res -> {
-//
-//            if (res.succeeded()) {
-//                SQLConnection connection = res.result();
-//
-//                System.out.println("RESULT null");
-//            } else {
-//                System.out.println("Connection or Operation Failed " + res.cause());
-//            }
-//        });
     }
 
     public void updateVote(String voteId, String vote) {
-
-//        JsonObject postgreSQLClientConfig = new JsonObject().put("host", "127.0.0.1");
-//        AsyncSQLClient postgreSQLClient = PostgreSQLClient.createShared(vertx, postgreSQLClientConfig);
-//
-//        postgreSQLClient.getConnection(res -> {
-//            if (res.succeeded()) {
-//                SQLConnection connection = res.result();
-//
-//                System.out.println("RESULT null");
-//            } else {
-//                System.out.println("Connection or Operation Failed " + res.cause());
-//            }
-//        });
 
         String deletePreviousVote = "DELETE FROM votes WHERE vote_id=?";
         JsonArray deleteParams = new JsonArray().add(voteId);
@@ -119,9 +88,6 @@ public class WorkerVerticle extends AbstractVerticle {
                         String vote = voteData.getString("vote");
                         this.updateVote(voteId, vote);
                     }
-//                    else {
-//                        System.out.println("RESULT null");
-//                    }
                 } else {
                     System.out.println("Connection or Operation Failed " + res.cause());
                 }
