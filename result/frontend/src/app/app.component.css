@@ -1,0 +1,36 @@
+
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin: 0 0 0.75rem 0;
+}
+
+/* Pattern styles */
+.container {
+  display: flex;
+}
+section {
+    height: 70%;
+}
+.item {
+  flex: 1;
+  cursor: pointer;
+  background-color: rgb(150, 150, 150);
+}
+
+.item.selected {
+  background-color: #00cbca !important;
+}
+/*
+.item:nth-child(odd) {
+  background-color: #1aaaf8;
+}
+
+.item:nth-child(even) {
+  background-color: #00cbca;
+}*/
