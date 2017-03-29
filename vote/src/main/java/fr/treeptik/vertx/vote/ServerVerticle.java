@@ -49,15 +49,15 @@ public class ServerVerticle extends AbstractVerticle {
         
         router.route().failureHandler(ErrorHandler.create(true));
 
-        StaticHandler staticHandler = StaticHandler.create();
-        staticHandler.setCachingEnabled(false);
-        router.route("/").handler(staticHandler);
-
-        router.post("/vote")
-                .handler(this::vote);
+        router.post("/vote").handler(this::vote);
 
         router.get("/vote")
                 .handler(this::info);
+
+        StaticHandler staticHandler = StaticHandler.create();
+        staticHandler.setCachingEnabled(false);
+        router.route("/*").handler(staticHandler);
+
         vertx.createHttpServer()
                 .requestHandler(router::accept)
                 .listen(8080);
