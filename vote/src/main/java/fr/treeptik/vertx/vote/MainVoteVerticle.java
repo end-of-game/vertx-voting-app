@@ -26,7 +26,6 @@ public class MainVoteVerticle extends AbstractVerticle {
     public void start(Future<Void> future) {
 
         MultipleFutures dbDeployments = new MultipleFutures();
-        dbDeployments.add(this::deployRedis);
         dbDeployments.add(this::deployServ);
 
         dbDeployments.setHandler(result -> {
@@ -37,19 +36,6 @@ public class MainVoteVerticle extends AbstractVerticle {
             }
         });
         dbDeployments.start();
-    }
-
-    private void deployRedis(Future<Void> future) {
-        DeploymentOptions options = new DeploymentOptions();
-        options.setWorker(true);
-        vertx.deployVerticle(RedisVerticle.class.getName(), options, result -> {
-            if (result.failed()) {
-                future.fail(result.cause());
-            } else {
-                deploymentIds.add(result.result());
-                future.complete();
-            }
-        });
     }
 
     private void deployServ(Future<Void> future) {

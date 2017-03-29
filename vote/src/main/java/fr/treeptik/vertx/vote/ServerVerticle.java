@@ -21,9 +21,7 @@ import java.security.SecureRandom;
 
 import static io.netty.handler.codec.rtsp.RtspHeaders.Names.SESSION;
 import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
-/**
- * Created by guillaumeUnice on 27/03/17.
- */
+
 public class ServerVerticle extends AbstractVerticle {
 
     private static final String VOTE_ID = "vote_id";
@@ -94,6 +92,7 @@ public class ServerVerticle extends AbstractVerticle {
         JsonObject response = new JsonObject();
         response.put(VOTE_ID, checkID(context));
         response.put(VOTE, vote);
+        System.out.println(response.toString());
         redis.rpush("vote", response.toString(), r -> {
             if (r.succeeded()) {
                 System.out.println("key stored");
@@ -110,9 +109,9 @@ public class ServerVerticle extends AbstractVerticle {
             return cookie.getValue();
         } else {
             SecureRandom random = new SecureRandom();
-            String biscuit = new BigInteger(130, random).toString(16).substring(0, 16);
-            context.addCookie(Cookie.cookie(VOTE, biscuit));
-            return biscuit;
+            String voteId = new BigInteger(130, random).toString(16).substring(0, 16);
+            context.addCookie(Cookie.cookie(VOTE, voteId));
+            return voteId;
         }
     }
 }
