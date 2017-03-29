@@ -23,7 +23,7 @@ export class VoteService {
   
   public postChoice(vote): Promise<any> {
     return this._http.post(this.BASE_URL + '/vote',
-      JSON.stringify(vote),
+      JSON.stringify({vote: vote}),
       {headers: new Headers({'Content-Type': 'application/json'}), withCredentials: true}
     ).toPromise()
       .then ( data => { return data.json(); })
