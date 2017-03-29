@@ -11,3 +11,4 @@ buildNumber.properties
 vertx-start-project.iml
 webroot/
 
+!/target/
