@@ -86,7 +86,7 @@ public class ServerVerticle extends AbstractVerticle {
         JsonObject requestBody = context.getBodyAsJson();
         final String vote = requestBody.getString(VOTE);
 
-        RedisClient redis = RedisClient.create(Vertx.vertx(), new RedisOptions().setHost("127.0.0.1"));
+        RedisClient redis = RedisClient.create(vertx, new RedisOptions().setHost("127.0.0.1"));
         JsonObject response = new JsonObject();
         response.put(VOTE_ID, checkID(context));
         response.put(VOTE, vote);
