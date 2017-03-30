@@ -47,10 +47,8 @@ public class ServerVerticle extends AbstractVerticle {
         
         router.route().failureHandler(ErrorHandler.create(true));
 
+        router.get("/vote").handler(this::info);
         router.post("/vote").handler(this::vote);
-
-        router.get("/vote")
-                .handler(this::info);
 
         StaticHandler staticHandler = StaticHandler.create();
         staticHandler.setCachingEnabled(false);

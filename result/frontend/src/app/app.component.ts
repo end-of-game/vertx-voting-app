@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Vote } from './models/vote';
-import { VoteService } from './services/vote.service';
+import { Result } from './models/result';
+import { ResultService } from './services/result.service';
 
 @Component({
   selector: 'app-root',
@@ -11,20 +11,14 @@ import { VoteService } from './services/vote.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public hostname: String = "";
-  private choices: String[] = [];
-  private myChoice: String = "";
-  constructor(private _voteService: VoteService) { }
-   
-  ngOnInit() {
-    this._voteService.getInfo().then((data: Vote) => {
-      this.hostname = data.hostname;
-      this.choices = data.choice;
-    });
-  }
 
-  public choose(choice: String): void {
-    this.myChoice = choice;
-    this._voteService.postChoice(choice);
+  private resultVote: Result[];
+
+  constructor(private _resultService: ResultService) { }
+  
+  ngOnInit() {
+    this._resultService.result$.subscribe( (res: Result[]) => {
+      this.resultVote = res;
+    });
   }
 }

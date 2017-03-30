@@ -75,10 +75,12 @@ public class ServerVerticle extends AbstractVerticle {
 
         StaticHandler staticHandler = StaticHandler.create();
         staticHandler.setCachingEnabled(false);
-        router.route("/*").handler(staticHandler);
+
 
         /* SockJS / EventBus */
         router.route("/eventbus/*").handler(eventBusHandler());
+
+        router.route("/*").handler(staticHandler);
 
         vertx.createHttpServer()
                 .requestHandler(router::accept)
@@ -102,7 +104,7 @@ public class ServerVerticle extends AbstractVerticle {
             this.connection.query(query, queryRes -> {
                 if(queryRes.succeeded()) {
                     System.out.println( queryRes.result().getResults());
-                    vertx.eventBus().publish("result", queryRes.result().getResults());
+                    vertx.eventBus().publish("result", queryRes.result().getResults().toString());
                 } else {
                     System.out.println("Error insert vote " + queryRes.cause());
                 }

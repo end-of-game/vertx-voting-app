@@ -1,18 +1,8 @@
 <section class="container">
-  <div [ngClass]="{'selected': myChoice === choice}" class="item" (click)="choose(choice);" *ngFor="let choice of choices; let i = index">
-    <article>
-      <h1>{{choice}}</h1>
-    </article>
+  <h2>Result</h2>
+  <div class="item" *ngFor="let result of resultVote; let i = index" class="result">
+    {{result.choice}}
+    <progress max="100" value="{{result.result}}" ></progress>
+    {{result.numberOfVote}}
   </div>
 </section>
-<br>
-<br>
-<div id="tip">
-  (Tip: you can change your vote)
-</div>
-
-<div id="hostname" style="font-size: 1.5em;">
-  Processed by container ID
-  <br>
-  {{hostname}}
-</div>

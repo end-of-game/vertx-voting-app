@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { VoteService } from './services/vote.service';
+import { ResultService } from './services/result.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +14,7 @@ import { VoteService } from './services/vote.service';
     FormsModule,
     HttpModule
   ],
-  providers: [VoteService],
+  providers: [ResultService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
