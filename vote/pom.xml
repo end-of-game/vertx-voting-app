@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>io.vertx.starter</groupId>
-  <artifactId>vertx-start-project</artifactId>
+  <artifactId>verticle-vote</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
@@ -74,6 +74,7 @@
     </pluginManagement>
 
     <plugins>
+      <!-- TODO : ajouter plugin pour nettoyer .vertx -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>

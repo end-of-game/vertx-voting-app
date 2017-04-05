@@ -9,7 +9,7 @@ ENV VERTICLE_HOME /usr/verticles
 
 EXPOSE 8080
 
-# Copy your verticle to the container                   (2)
+# Copy your verticle to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
 
 # Launch the verticle

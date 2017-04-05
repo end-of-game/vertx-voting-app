@@ -62,15 +62,8 @@ public class ServerVerticle extends AbstractVerticle {
     private void info (RoutingContext context) {
         checkID(context);
 
-        String hostname = "";
-        try {
-            hostname = InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
         JsonObject response = new JsonObject();
-        response.put(HOSTNAME, hostname);
+        response.put(HOSTNAME, "zepouetstation");
         JsonArray choice = new JsonArray();
         choice.add("Cats");
         choice.add("Dogs");
