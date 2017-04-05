@@ -4,17 +4,51 @@ services:
 
   redis:
     image: redis:3.0.7-alpine
-    container_name: redis
+    container_name: vds-redis
+    environment:
+      - TZ=${TZ}
     ports: ["6379:6379"]
 
   postgres:
     image: postgres:9.6
-    container_name: postgres
+    container_name: vds-postgres
     ports: ["5342:5342"]
+    environment:
+      - POSTGRES_USER=postgres
+      - TZ=${TZ}
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
 
   vote:
-    image: vertx-dockerswarm/verticle-vote:latest
+    image: vertx-dockerswarm/verticle-vote:${TAG_VOTE}
     container_name: vote
+    environment:
+      - TZ=${TZ}
+    depends_on:
+      - redis
 
+  result:
+      image: vertx-dockerswarm/verticle-worker:${TAG_RESULT}
+      container_name: vote
+      environment:
+        - TZ=${TZ}
+      depends_on:
+        - postgres
+
+  worker:
+      image: vertx-dockerswarm/verticle-worker:${TAG_WORKER}
+      container_name: vote
+      environment:
+        - TZ=${TZ}
+      depends_on:
+        - postgres
+        - redis
+
+volumes:
+  db-data:
+
+# networks:
+  #front-tier:
+  #back-tier:
 
 

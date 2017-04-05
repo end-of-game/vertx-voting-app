@@ -11,11 +11,17 @@
 
     <properties>
         <docker.image.prefix>vertx-dockerswarm</docker.image.prefix>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <vertx.version>3.4.1</vertx.version>
     </properties>
 
     <modules>
         <module>vote</module>
+        <module>worker</module>
+        <module>result</module>
     </modules>
 
     <dependencyManagement>
@@ -62,5 +68,28 @@
             <artifactId>vertx-redis-client</artifactId>
         </dependency>
     </dependencies>
+
+
+    <build>
+        <plugins>
+        <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.4.13</version>
+            <configuration>
+                <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                <dockerDirectory>docker</dockerDirectory>
+                <resources>
+                    <resource>
+                        <targetPath>/</targetPath>
+                        <directory>${project.basedir}/docker</directory>
+                    </resource>
+                </resources>
+                <forceTags>true</forceTags>
+                <useConfigFile>true</useConfigFile>
+            </configuration>
+        </plugin>
+        </plugins>
+    </build>
 
 </project>
