@@ -10,3 +10,4 @@ vote/.vertx/
 vote/target/generated-sources/
 worker/.vertx/
 worker/target/generated-sources/
+/target/
