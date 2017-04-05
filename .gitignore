@@ -1,4 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-vote/.vertx/
-/vote/target/
+/result/.vertx/
+/result/target/
