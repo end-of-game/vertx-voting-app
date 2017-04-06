@@ -11,10 +11,10 @@ EXPOSE 8080
 
 LABEL application verticle-vote-1.0-SNAPSHOT
 LABEL git.branch master
-LABEL git.commit.id 8fcfcfd4dd3e6dc0ae6fadc14b110b4183eaeee2
+LABEL git.commit.id 7cdf1211dd18d87e34fe063bfaceb6a9a60c44ff
 LABEL git.commit.user.email zepouet@gmail.com
-LABEL git.commit.message.full Add Maven Spotify plugin
-LABEL git.commit.time 20170406-100721
+LABEL git.commit.message.full Update
+LABEL git.commit.time 20170406-110938
 
 # Copy your verticle to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
