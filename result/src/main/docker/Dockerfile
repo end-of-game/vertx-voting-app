@@ -9,7 +9,8 @@ ENV VERTICLE_HOME /usr/verticles
 
 EXPOSE 8080
 
-LABEL application ${project.build.finalName}
+LABEL application ${project.artifactId}
+LABEL version ${project.version}
 LABEL git.branch ${git.branch}
 LABEL git.commit.id.abbrev ${git.commit.id.abbrev}
 LABEL git.commit.user.email ${git.commit.user.email}

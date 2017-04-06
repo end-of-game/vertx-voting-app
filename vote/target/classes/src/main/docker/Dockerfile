@@ -11,10 +11,10 @@ EXPOSE 8080
 
 LABEL application verticle-vote-1.0-SNAPSHOT
 LABEL git.branch master
-LABEL git.commit.id 7cdf1211dd18d87e34fe063bfaceb6a9a60c44ff
+LABEL git.commit.id 79ccfa5b7e3493d0c2d0c55a18d39b097c401d6b
 LABEL git.commit.user.email zepouet@gmail.com
 LABEL git.commit.message.full Update
-LABEL git.commit.time 20170406-110938
+LABEL git.commit.time 20170406-112447
 
 # Copy your verticle to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
