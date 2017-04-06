@@ -20,7 +20,7 @@ services:
       - "db-data:/var/lib/postgresql/data"
 
   vote:
-    image: vertx-dockerswarm/verticle-vote:${TAG_VOTE}
+    image: vertx-dockerswarm/verticle-vote:${TAG_VOTE:latest}
     container_name: vote
     environment:
       - TZ=${TZ}
@@ -28,7 +28,7 @@ services:
       - redis
 
   result:
-      image: vertx-dockerswarm/verticle-worker:${TAG_RESULT}
+      image: vertx-dockerswarm/verticle-worker:${TAG_RESULT:latest}
       container_name: vote
       environment:
         - TZ=${TZ}
@@ -36,7 +36,7 @@ services:
         - postgres
 
   worker:
-      image: vertx-dockerswarm/verticle-worker:${TAG_WORKER}
+      image: vertx-dockerswarm/verticle-worker:${TAG_WORKER:latest}
       container_name: vote
       environment:
         - TZ=${TZ}
