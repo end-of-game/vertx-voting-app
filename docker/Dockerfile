@@ -1,5 +1,4 @@
-FROM scratch
+FROM busybox
 
-COPY docker-compose.yml docker-compose.yml
 
 

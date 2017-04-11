@@ -1,5 +1,4 @@
 /Users/nicolas/software/vertx/vertx-voting-app/vote/src/main/java/fr/treeptik/vertx/vote/utils/MultipleFutures.java
 /Users/nicolas/software/vertx/vertx-voting-app/vote/src/main/java/fr/treeptik/vertx/vote/ServerVerticle.java
 /Users/nicolas/software/vertx/vertx-voting-app/vote/src/main/java/fr/treeptik/vertx/vote/MainVoteVerticle.java
-/Users/nicolas/software/vertx/vertx-voting-app/vote/src/main/java/fr/treeptik/vertx/vote/RedisVerticle.java
 /Users/nicolas/software/vertx/vertx-voting-app/vote/src/main/java/fr/treeptik/vertx/vote/utils/SimpleFuture.java

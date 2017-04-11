@@ -11,10 +11,10 @@ EXPOSE 8080
 
 LABEL application verticle-worker-1.0-SNAPSHOT
 LABEL git.branch master
-LABEL git.commit.id.abbrev 8692d3a
-LABEL git.commit.user.email zepouet@gmail.com
-LABEL git.commit.message.full Update
-LABEL git.commit.time 20170406-163530
+LABEL git.commit.id.abbrev 3101acb
+LABEL git.commit.user.email guillaume.unice@gmail.com
+LABEL git.commit.message.full Update favicon + build maven cp webroot directory
+LABEL git.commit.time 20170411-120106
 
 # Copy your verticle to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
