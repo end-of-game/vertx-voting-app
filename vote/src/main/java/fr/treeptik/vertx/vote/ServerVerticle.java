@@ -52,7 +52,7 @@ public class ServerVerticle extends AbstractVerticle {
 
         StaticHandler staticHandler = StaticHandler.create();
         staticHandler.setCachingEnabled(false);
-        router.route("/*").handler(staticHandler);
+        router.route("/*").handler(StaticHandler.create());
 
         vertx.createHttpServer()
                 .requestHandler(router::accept)
@@ -79,7 +79,7 @@ public class ServerVerticle extends AbstractVerticle {
         JsonObject requestBody = context.getBodyAsJson();
         final String vote = requestBody.getString(VOTE);
 
-        RedisClient redis = RedisClient.create(vertx, new RedisOptions().setHost("127.0.0.1"));
+        RedisClient redis = RedisClient.create(vertx, new RedisOptions().setHost("vds-redis"));
         JsonObject response = new JsonObject();
         response.put(VOTE_ID, checkID(context));
         response.put(VOTE, vote);

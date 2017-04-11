@@ -12,8 +12,6 @@ import java.util.List;
  */
 public class MainVoteVerticle extends AbstractVerticle {
 
-    public static final int REDIS_PORT = 8889;
-
     private List<String> deploymentIds;
 
     @Override

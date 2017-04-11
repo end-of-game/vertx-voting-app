@@ -15,7 +15,7 @@ public class RedisVerticle extends AbstractVerticle {
         // If a config file is set, read the host and port.
         String host = Vertx.currentContext().config().getString("host");
         if (host == null) {
-            host = "127.0.0.1";
+            host = "vds-redis";
         }
         // Create the redis client
         final RedisClient client = RedisClient.create(vertx, new RedisOptions().setHost(host));

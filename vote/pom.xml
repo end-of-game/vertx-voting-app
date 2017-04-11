@@ -105,7 +105,6 @@
               <targetPath>/</targetPath>
               <directory>${project.basedir}</directory>
               <excludes>
-                <exclude>webroot/**/*</exclude>
                 <exclude>frontend/**/*</exclude>
                 <exclude>target/**/*</exclude>
                 <exclude>pom.xml</exclude>
@@ -120,8 +119,10 @@
           </resources>
           <forceTags>true</forceTags>
           <imageTags>
+            <!--
             <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
             <imageTag>${project.version}</imageTag>
+            -->
             <imageTag>latest</imageTag>
           </imageTags>
           <useConfigFile>true</useConfigFile>

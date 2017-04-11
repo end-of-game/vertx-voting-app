@@ -1,20 +1,20 @@
 # Extend vert.x image
 FROM vertx/vertx3:3.4.1
 
-ENV VERTICLE_NAME ${main.verticle}
-ENV VERTICLE_FILE ${project.artifactId}-fatboyslim.jar
+ENV VERTICLE_NAME fr.treeptik.vertx.vote.MainVoteVerticle
+ENV VERTICLE_FILE verticle-vote-fatboyslim.jar
 
 # Set the location of the verticles
 ENV VERTICLE_HOME /usr/verticles
 
 EXPOSE 8080
 
-LABEL application ${project.build.finalName}
-LABEL git.branch ${git.branch}
-LABEL git.commit.id ${git.commit.id}
-LABEL git.commit.user.email ${git.commit.user.email}
-LABEL git.commit.message.full ${git.commit.message.full}
-LABEL git.commit.time ${git.commit.time}
+LABEL application verticle-vote-1.0-SNAPSHOT
+LABEL git.branch master
+LABEL git.commit.id 8692d3a4edf016a1de12f75436253feb5fc815ab
+LABEL git.commit.user.email zepouet@gmail.com
+LABEL git.commit.message.full Update
+LABEL git.commit.time 20170406-163530
 
 # Copy your verticle to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
