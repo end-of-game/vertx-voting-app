@@ -1,10 +1,10 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-/result/.vertx/
-/result/target/
-/result/webroot/
-/vote/webroot/
-/vote/target/
+result/.vertx/
+result/target/
+result/webroot/
+vote/webroot/
+vote/target/
 .vertx/
 vote/.vertx/
 vote/target/generated-sources/
