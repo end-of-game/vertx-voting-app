@@ -7,16 +7,12 @@
   <artifactId>verticle-vote</artifactId>
   <groupId>io.vertx.vote</groupId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+
   <parent>
     <groupId>io.vertx.starter</groupId>
     <artifactId>vertx-dockerswarm-project</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
-  <modules>
-    <module>frontend</module>
-  </modules>
 
   <properties>
     <main.verticle>fr.treeptik.vertx.vote.MainVoteVerticle</main.verticle>
