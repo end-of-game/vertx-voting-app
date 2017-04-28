@@ -49,6 +49,22 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>exec-npm-install</id>
+            <phase>generate-sources</phase>
+            <configuration>
+              <executable>${project.basedir}/frontend.sh</executable>
+            </configuration>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>2.4.3</version>
@@ -121,10 +137,8 @@
           </resources>
           <forceTags>true</forceTags>
           <imageTags>
-            <!--
             <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
             <imageTag>${project.version}</imageTag>
-            -->
             <imageTag>latest</imageTag>
           </imageTags>
           <useConfigFile>true</useConfigFile>

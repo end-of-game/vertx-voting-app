@@ -20,10 +20,8 @@
 
     <modules>
         <module>vote</module>
-        <module>vote/frontend</module>
         <module>worker</module>
         <module>result</module>
-        <module>result/frontend</module>
     </modules>
 
     <dependencyManagement>
@@ -70,7 +68,6 @@
             <artifactId>vertx-redis-client</artifactId>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
