@@ -54,7 +54,7 @@
           <executions>
             <execution>
               <id>exec-npm-install</id>
-              <phase>generate-sources</phase>
+              <phase>prepare-package</phase>
               <configuration>
                 <executable>${project.basedir}/frontend.sh</executable>
               </configuration>
@@ -123,7 +123,6 @@
                 <targetPath>/</targetPath>
                 <directory>${project.basedir}</directory>
                 <excludes>
-                  <exclude>webroot/**/*</exclude>
                   <exclude>frontend/**/*</exclude>
                   <exclude>target/**/*</exclude>
                   <exclude>pom.xml</exclude>

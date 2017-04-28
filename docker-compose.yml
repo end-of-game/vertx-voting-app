@@ -30,10 +30,10 @@ services:
       - redis
 
   result:
-      image: "vertx-dockerswarm/verticle-worker:${TAG_RESULT}"
+      image: "vertx-dockerswarm/verticle-result:${TAG_RESULT}"
       container_name: vds-result
       ports:
-        - 8081:8080
+        - 8081:8081
       environment:
         - TZ=${TZ}
       depends_on:

@@ -28,7 +28,7 @@ public class ServerVerticle extends AbstractVerticle {
     }
 
     public void startDBLoop() {
-        JsonObject postgreSQLClientConfig = new JsonObject().put("host", "localhost");
+        JsonObject postgreSQLClientConfig = new JsonObject().put("host", "vds-postgres");
         postgreSQLClientConfig.put("database", "postgres")
                 .put("username", "postgres");
 
@@ -51,6 +51,8 @@ public class ServerVerticle extends AbstractVerticle {
                 });
 
             } else {
+                System.out.println("Connection or Operation Failed " + conn.cause());
+                System.out.println("Connection or Operation Failed " + conn.cause());
                 System.out.println("Connection or Operation Failed " + conn.cause());
             }
         });
@@ -75,7 +77,6 @@ public class ServerVerticle extends AbstractVerticle {
 
         StaticHandler staticHandler = StaticHandler.create();
         staticHandler.setCachingEnabled(false);
-
 
         /* SockJS / EventBus */
         router.route("/eventbus/*").handler(eventBusHandler());

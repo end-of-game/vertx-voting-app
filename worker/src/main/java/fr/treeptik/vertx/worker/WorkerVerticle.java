@@ -17,14 +17,13 @@ public class WorkerVerticle extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> future) {
-        redis = RedisClient.create(vertx, new RedisOptions().setHost("127.0.0.1"));
+        redis = RedisClient.create(vertx, new RedisOptions().setHost("vds-redis"));
 
-        JsonObject postgreSQLClientConfig = new JsonObject().put("host", "localhost");
+        JsonObject postgreSQLClientConfig = new JsonObject().put("host", "vds-postgres");
         postgreSQLClientConfig.put("database", "postgres")
                 .put("username", "postgres");
 
         AsyncSQLClient postgreSQLClient = PostgreSQLClient.createShared(vertx, postgreSQLClientConfig);
-
 
         postgreSQLClient.getConnection(conn -> {
             if (conn.succeeded()) {
@@ -82,7 +81,7 @@ public class WorkerVerticle extends AbstractVerticle {
             redis.blpop("vote", 2, res -> {
                 if (res.succeeded()) {
                     if (res.result()!=null){
-                        System.out.println(res.result().getString(1));
+                        System.out.println("worker: " + res.result().getString(1));
                         JsonObject voteData = new JsonObject(res.result().getString(1));
                         String voteId = voteData.getString("vote_id");
                         String vote = voteData.getString("vote");
