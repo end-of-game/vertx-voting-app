@@ -137,7 +137,7 @@
               <include>${project.artifactId}-fatboyslim.jar</include>
             </rescource>
           </resources>
-          <forceTags>true</forceTags>
+          <!--<forceTags>true</forceTags>-->
           <imageTags>
             <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
             <imageTag>${project.version}</imageTag>

@@ -17,4 +17,4 @@ docker run --name vertx-back -t -i -p 8080:8080 vertx-voting-app/vote-back:dev
 
 # 2
 
-Just commit
+Just commit another times
