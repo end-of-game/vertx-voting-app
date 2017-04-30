@@ -8,6 +8,8 @@ services:
     environment:
       - TZ=${TZ}
     ports: ["6379:6379"]
+    networks:
+      - front-tier
 
   postgres:
     image: postgres:9.6
@@ -18,6 +20,8 @@ services:
       - TZ=${TZ}
     volumes:
       - "db-data:/var/lib/postgresql/data"
+    networks:
+      - back-tier
 
   vote:
     image: "vertx-dockerswarm/verticle-vote:${TAG_VOTE}"
@@ -28,31 +32,38 @@ services:
       - TZ=${TZ}
     depends_on:
       - redis
+    networks:
+      - front-tier
 
   result:
-      image: "vertx-dockerswarm/verticle-result:${TAG_RESULT}"
-      container_name: vds-result
-      ports:
-        - 8081:8081
-      environment:
-        - TZ=${TZ}
-      depends_on:
-        - postgres
+    image: "vertx-dockerswarm/verticle-result:${TAG_RESULT}"
+    container_name: vds-result
+    ports:
+      - 8081:8081
+    environment:
+      - TZ=${TZ}
+    depends_on:
+      - postgres
+    networks:
+      - back-tier
 
   worker:
-      image: "vertx-dockerswarm/verticle-worker:${TAG_WORKER}"
-      container_name: vds-worker
-      environment:
-        - TZ=${TZ}
-      depends_on:
-        - postgres
-        - redis
+    image: "vertx-dockerswarm/verticle-worker:${TAG_WORKER}"
+    container_name: vds-worker
+    environment:
+      - TZ=${TZ}
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - front-tier
+      - back-tier
 
 volumes:
   db-data:
 
-# networks:
-  #front-tier:
-  #back-tier:
+networks:
+  front-tier:
+  back-tier:
 
 

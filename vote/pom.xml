@@ -145,6 +145,20 @@
           </imageTags>
           <useConfigFile>true</useConfigFile>
         </configuration>
+        <executions>
+          <execution>
+            <id>push-image</id>
+            <phase>deploy</phase>
+            <goals>
+              <goal>push</goal>
+            </goals>
+            <configuration>
+              <imageName>nmuller/verticle-vote:latest</imageName>
+              <imageName>nmuller/verticle-vote:${project.version}</imageName>
+              <imageName>nmuller/verticle-vote:${project.version}.${git.commit.id.abbrev}</imageName>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
