@@ -139,7 +139,6 @@
           </resources>
           <!--<forceTags>true</forceTags>-->
           <imageTags>
-            <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
             <imageTag>${project.version}</imageTag>
             <imageTag>latest</imageTag>
           </imageTags>
