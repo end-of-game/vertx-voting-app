@@ -24,7 +24,7 @@ services:
       - back-tier
 
   vote:
-    image: "vertx-dockerswarm/verticle-vote:${TAG_VOTE}"
+    image: "vertxdockerswarm/verticle-vote:${TAG_VOTE}"
     container_name: vds-vote
     ports:
       - 8080:8080
@@ -36,7 +36,7 @@ services:
       - front-tier
 
   result:
-    image: "vertx-dockerswarm/verticle-result:${TAG_RESULT}"
+    image: "vertxdockerswarm/verticle-result:${TAG_RESULT}"
     container_name: vds-result
     ports:
       - 8081:8081
@@ -48,7 +48,7 @@ services:
       - back-tier
 
   worker:
-    image: "vertx-dockerswarm/verticle-worker:${TAG_WORKER}"
+    image: "vertxdockerswarm/verticle-worker:${TAG_WORKER}"
     container_name: vds-worker
     environment:
       - TZ=${TZ}
