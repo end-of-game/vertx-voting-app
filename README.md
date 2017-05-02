@@ -18,7 +18,7 @@ docker swarm init
 ```
 Once you have your swarm, in this directory run:
 ```
-docker stack deploy --compose-file docker-stack.yml vote
+docker stack deploy --compose-file docker-stack.yml demo
 ```
 
 Architecture

@@ -28,7 +28,7 @@ services:
   vds-vote:
     image: "vertxdockerswarm/verticle-vote:latest"
     ports:
-      - 8080
+      - 8080:8080
     environment:
       - TZ=${TZ}
     depends_on:
@@ -39,7 +39,7 @@ services:
   vds-result:
     image: "vertxdockerswarm/verticle-result:latest"
     ports:
-      - 8081
+      - 8081:8081
     environment:
       - TZ=${TZ}
     depends_on:
