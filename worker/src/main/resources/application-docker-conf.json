@@ -1,0 +1,4 @@
+{
+  "redis.host" : "vds-redis",
+  "postgres.host" : "vds-postgres"
+}
