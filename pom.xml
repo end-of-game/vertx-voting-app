@@ -22,7 +22,6 @@
         <module>vote</module>
         <module>worker</module>
         <module>result</module>
-
     </modules>
 
     <dependencyManagement>
