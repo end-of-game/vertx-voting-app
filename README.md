@@ -1,9 +1,3 @@
-# RUN DATABASES
-
-docker run -d -p 6379:6379 --name vds-redis redis:alpine
-
-docker run --name vds-postgres -p 5432:5432 -e POSTGRES_USER=postgres -d postgres
-
 Example Voting App
 =========
 
@@ -32,11 +26,11 @@ Architecture
 
 ![Architecture diagram](architecture.png)
 
-* A verticle webapp which lets you vote between two options
+* A **verticle** webapp which lets you vote between two options
 * A Redis queue which collects new votes
-* A verticle worker which consumes votes and stores them in…
+* A **verticle** worker which consumes votes and stores them in…
 * A Postgres database backed by a Docker volume
-* A verticle webapp which shows the results of the voting in real time
+* A **verticle** webapp which shows the results of the voting in real time
 
 Note
 ----
