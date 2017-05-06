@@ -12,7 +12,7 @@ services:
       - front-tier
 
   postgres:
-    image: postgres:9.6-alpine
+    image: postgres:9.6
     container_name: vds-postgres
     ports: ["5432:5432"]
     environment:

@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <docker.image.prefix>vertxdockerswarm</docker.image.prefix>
+        <docker.image.prefix>vertx-swarm</docker.image.prefix>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>

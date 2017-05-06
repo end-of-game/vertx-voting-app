@@ -19,7 +19,6 @@
   </properties>
 
   <build>
-    <finalName>verticle-vote</finalName>
     <resources>
       <resource>
         <directory>${project.basedir}</directory>
@@ -54,7 +53,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.4.3</version>
+        <version>3.0.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -135,10 +134,10 @@
             <rescource>
               <targetPath>/</targetPath>
               <directory>${project.build.directory}</directory>
-              <include>${project.artifactId}-fatboyslim.jar</include>
+              <include>verticle-vote-fatboyslim.jar</include>
             </rescource>
           </resources>
-          <!--<forceTags>true</forceTags>-->
+          <forceTags>false</forceTags>
           <imageTags>
             <imageTag>latest</imageTag>
             <imageTag>${project.version}</imageTag>
@@ -146,20 +145,6 @@
           </imageTags>
           <useConfigFile>true</useConfigFile>
         </configuration>
-        <executions>
-          <execution>
-            <id>push-image</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>push</goal>
-            </goals>
-            <configuration>
-              <imageName>nmuller/verticle-vote:latest</imageName>
-              <imageName>nmuller/verticle-vote:${project.version}</imageName>
-              <imageName>nmuller/verticle-vote:${project.version}.${git.commit.id.abbrev}</imageName>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -179,7 +164,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
+        <version>2.7</version>
         <executions>
           <execution>
             <id>copy-resources</id>
