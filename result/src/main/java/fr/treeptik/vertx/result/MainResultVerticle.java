@@ -1,5 +1,8 @@
 package fr.treeptik.vertx.result;
 
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Log4J2LoggerFactory;
+import io.netty.util.internal.logging.Log4JLoggerFactory;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Context;
 import io.vertx.core.Future;
@@ -8,6 +11,8 @@ import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
+import io.vertx.core.logging.SLF4JLogDelegate;
+import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.PostgreSQLClient;
 import io.vertx.ext.sql.SQLConnection;
