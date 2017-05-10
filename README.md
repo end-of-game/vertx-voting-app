@@ -12,6 +12,23 @@ Build the images in this directory:
 mvn clean package docker:build
 ```
 
+You should have a similar result
+
+```
+ ✘ nicolas@MacBook  ~/software/vertx/vertx-voting-app   master  docker images REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
+vertx-swarm/verticle-result             1.0-SNAPSHOT           ebeb1bb53f78        22 minutes ago      450 MB
+vertx-swarm/verticle-result             1.0-SNAPSHOT.27015db   ebeb1bb53f78        22 minutes ago      450 MB
+vertx-swarm/verticle-result             latest                 ebeb1bb53f78        22 minutes ago      450 MB
+<none>                                  <none>                 eb15bd215d5b        36 minutes ago      442 MB
+<none>                                  <none>                 b343f55ec8ec        40 minutes ago      442 MB
+vertx-swarm/verticle-worker             1.0-SNAPSHOT           fb702b8f68cf        40 minutes ago      440 MB
+vertx-swarm/verticle-worker             1.0-SNAPSHOT.27015db   fb702b8f68cf        40 minutes ago      440 MB
+vertx-swarm/verticle-worker             latest                 fb702b8f68cf        40 minutes ago      440 MB
+vertx-swarm/verticle-vote               1.0-SNAPSHOT           4b7a5532ba97        40 minutes ago      438 MB
+vertx-swarm/verticle-vote               1.0-SNAPSHOT.27015db   4b7a5532ba97        40 minutes ago      438 MB
+vertx-swarm/verticle-vote               latest                 4b7a5532ba97        40 minutes ago      438 MB
+poc/spring-petclinic                    1.0.0-SNAPSHOT         8deb4e32a5e4        About an hour ago   964 MB
+```
 
 Run in this directory:
 ```
