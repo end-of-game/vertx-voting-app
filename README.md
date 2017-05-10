@@ -14,7 +14,6 @@ mvn clean package docker:build
 
 You should have a similar result with `docker images`:
 
-
 ```
  ✘ nicolas@MacBook  ~/software/vertx/vertx-voting-app   master  docker images REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
 vertx-swarm/verticle-result             1.0-SNAPSHOT           ebeb1bb53f78        22 minutes ago      450 MB
