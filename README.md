@@ -12,7 +12,8 @@ Build the images in this directory:
 mvn clean package docker:build
 ```
 
-You should have a similar result
+You should have a similar result with `docker images`:
+
 
 ```
  ✘ nicolas@MacBook  ~/software/vertx/vertx-voting-app   master  docker images REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
