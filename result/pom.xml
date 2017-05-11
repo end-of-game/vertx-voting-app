@@ -25,6 +25,7 @@
           <filtering>true</filtering>
           <includes>
             <include>src/main/docker/Dockerfile</include>
+            <include>src/main/resources/application-docker-conf.json</include>
           </includes>
         </resource>
       </resources>

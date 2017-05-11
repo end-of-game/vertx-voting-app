@@ -41,7 +41,7 @@ public class MainResultVerticle extends AbstractVerticle {
     }
 
     public void startDBLoop() {
-        postgresHost = config().getString("postgres.port", "localhost");
+        postgresHost = config().getString("postgres.host", "localhost");
         JsonObject postgreSQLClientConfig = new JsonObject().put("host", postgresHost);
 
         postgreSQLClientConfig.put("database", "postgres")

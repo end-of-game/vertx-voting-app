@@ -20,7 +20,6 @@ LABEL git.commit.time ${git.commit.time}
 # Copy your verticle to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
 
-COPY src/main/resources/logging.properties /usr/local/vertx/conf/logging.properties
 COPY src/main/resources/application-docker-conf.json $VERTICLE_CONF
 
 # Launch the verticle
