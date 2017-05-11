@@ -26,7 +26,7 @@ services:
         constraints: [node.role == manager]
 
   vds-vote:
-    image: "vertx-swarm/verticle-vote:latest"
+    image: "vertxswarm/verticle-vote:latest"
     ports:
       - 8080:8080
     environment:
@@ -37,7 +37,7 @@ services:
       - front-tier
 
   vds-result:
-    image: "vertx-swarm/verticle-result:latest"
+    image: "vertxswarm/verticle-result:latest"
     ports:
       - 8081:8081
     environment:
@@ -48,7 +48,7 @@ services:
       - back-tier
 
   vds-worker:
-    image: "vertx-swarm/verticle-worker:latest"
+    image: "vertxswarm/verticle-worker:latest"
     environment:
       - TZ=${TZ}
     depends_on:
