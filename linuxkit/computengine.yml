@@ -120,7 +120,25 @@ services:
       - CAP_SYS_CHROOT
       - CAP_SETUID
       - CAP_SETGID
-    net: host 
+    net: host
+  - name: vds-postgres
+    image: "postgres:9.6-alpine"
+    capabilities:
+     - CAP_NET_BIND_SERVICE
+     - CAP_CHOWN
+     - CAP_SETUID
+     - CAP_SETGID
+     - CAP_DAC_OVERRIDE
+    net: host
+  - name: vds-redis
+    image: "redis:3.0.7-alpine"
+    capabilities:
+     - CAP_NET_BIND_SERVICE
+     - CAP_CHOWN
+     - CAP_SETUID
+     - CAP_SETGID
+     - CAP_DAC_OVERRIDE
+    net: host
   - name: docker
     image: "linuxkit/docker-ce:741bf21513328f674e0cdcaa55492b0b75974e08"
     capabilities:
