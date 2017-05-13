@@ -7,6 +7,8 @@ import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpMethod;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.Cookie;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -26,6 +28,8 @@ import static io.vertx.core.http.HttpHeaders.CONTENT_TYPE;
 
 public class MainVoteVerticle extends AbstractVerticle {
 
+    private Logger logger = LoggerFactory.getLogger(MainVoteVerticle.class.getName());
+
     private static final String VOTE_ID = "vote_id";
     private static final String VOTE = "vote";
     private static final String HOSTNAME_FIELD = "hostname";
@@ -39,8 +43,9 @@ public class MainVoteVerticle extends AbstractVerticle {
         super.init(vertx, context);
         try {
             hostname = InetAddress.getLocalHost().getHostName();
+            logger.info(hostname);
         } catch (UnknownHostException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 
@@ -72,8 +77,8 @@ public class MainVoteVerticle extends AbstractVerticle {
 
         port = config().getInteger("http.port", 8080);
         redisHost = config().getString("redis.host", "localhost");
-        System.out.println(port);
-        System.out.println(redisHost);
+        logger.info("http.port: {}", port);
+        logger.info("redis.host: {}",redisHost);
 
         vertx.createHttpServer()
             .requestHandler(router::accept)

@@ -1,14 +1,25 @@
-# Extend vert.x image
-FROM vertx/vertx3
+FROM openjdk:8-jre-alpine
 
-ENV VERTICLE_NAME ${main.verticle}
-ENV VERTICLE_CONF /usr/local/vertx/conf/application-docker-conf.json
 ENV VERTICLE_FILE ${project.artifactId}-fatboyslim.jar
 
 # Set the location of the verticles
 ENV VERTICLE_HOME /usr/verticles
+ENV VERTICLE_CONF $VERTICLE_HOME/application-docker-conf.json
 
 EXPOSE 8080
+
+# Copy your fat jar to the container
+COPY $VERTICLE_FILE $VERTICLE_HOME/
+COPY application-docker-conf.json $VERTICLE_CONF
+COPY log4j2.xml $VERTICLE_HOME
+
+# Launch the verticle
+WORKDIR $VERTICLE_HOME
+ENTRYPOINT ["sh", "-c"]
+CMD ["exec java -Dorg.apache.logging.log4j.simplelog.StatusLogger.level=TRACE \
+                -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.Log4j2LogDelegateFactory \
+                -jar $VERTICLE_FILE \
+                --conf $VERTICLE_CONF"]
 
 LABEL application ${project.artifactId}
 LABEL version ${project.version}
@@ -18,17 +29,5 @@ LABEL git.commit.user.email ${git.commit.user.email}
 LABEL git.commit.message.full ${git.commit.message.full}
 LABEL git.commit.time ${git.commit.time}
 
-# Copy your verticle to the container
-COPY $VERTICLE_FILE $VERTICLE_HOME/
-
-COPY src/main/resources/logging.properties /usr/local/vertx/conf/logging.properties
-COPY src/main/resources/application-docker-conf.json $VERTICLE_CONF
-COPY webroot $VERTICLE_HOME/webroot
-
-# Launch the verticle
-WORKDIR $VERTICLE_HOME
-
-ENTRYPOINT ["sh", "-c"]
-CMD ["exec vertx run -conf $VERTICLE_CONF $VERTICLE_NAME -cp $VERTICLE_HOME/*"]
 
 

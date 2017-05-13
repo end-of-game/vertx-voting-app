@@ -18,16 +18,24 @@
     <main.verticle>fr.treeptik.vertx.vote.MainVoteVerticle</main.verticle>
   </properties>
 
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.8.2</version>
+    </dependency>
+
+  </dependencies>
   <build>
     <resources>
       <resource>
-        <directory>${project.basedir}</directory>
+        <directory>src/main/resources</directory>
         <filtering>true</filtering>
-        <includes>
-          <include>src/main/docker/Dockerfile</include>
-          <include>src/main/resources/logging.properties</include>
-          <include>src/main/resources/application-docker-conf.json</include>
-        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/docker</directory>
+        <filtering>true</filtering>
       </resource>
     </resources>
     <plugins>
@@ -119,7 +127,7 @@
         <version>0.4.13</version>
         <configuration>
           <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-          <dockerDirectory>${project.build.directory}/classes/src/main/docker</dockerDirectory>
+          <dockerDirectory>${project.build.directory}/classes</dockerDirectory>
           <resources>
             <resource>
               <targetPath>/</targetPath>
@@ -131,17 +139,16 @@
                 <exclude>*.iml</exclude>
               </excludes>
             </resource>
-            <rescource>
+            <resource>
               <targetPath>/</targetPath>
               <directory>${project.build.directory}</directory>
               <include>verticle-vote-fatboyslim.jar</include>
-            </rescource>
+            </resource>
           </resources>
           <forceTags>false</forceTags>
           <imageTags>
             <imageTag>latest</imageTag>
             <imageTag>${project.version}</imageTag>
-            <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
           </imageTags>
           <useConfigFile>true</useConfigFile>
         </configuration>
