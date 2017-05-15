@@ -60,23 +60,22 @@ We choose to use these Maven plugin :
 
 For Verticle vote 
 
-* [https://github.com/spotify/docker-maven-plugin](Docker Spotify) 
-* [https://github.com/ktoso/maven-git-commit-id-plugin](Git Project13)
-* Homebrew script shell to build AngularJS artefact
+* [Docker Spotify](https://github.com/spotify/docker-maven-plugin) 
+* [Git Project13](https://github.com/ktoso/maven-git-commit-id-plugin)
 
 For Verticle worker
-* [https://github.com/spotify/docker-maven-plugin](Docker Spotify) 
-* [https://github.com/ktoso/maven-git-commit-id-plugin](Git Project13)
+* [Docker Spotify](https://github.com/spotify/docker-maven-plugin) 
+* [Git Project13](https://github.com/ktoso/maven-git-commit-id-plugin)
 
 For Verticle result
 
-* [https://github.com/spotify/docker-maven-plugin](Docker Spotify) 
-* [https://github.com/ktoso/maven-git-commit-id-plugin](Git Project13)
-* [https://github.com/eirslett/frontend-maven-plugin](frontend Maven plugin)
+* [Docker Spotify](https://github.com/spotify/docker-maven-plugin) 
+* [Git Project13](https://github.com/ktoso/maven-git-commit-id-plugin)
 
-In a next future, we will use too :
-- [ ] [https://github.com/fabric8io/docker-maven-plugin](Fabric8 Docker)
-- [ ] [https://vmp.fabric8.io/](Fabric8 Vertx)
+In a near future, we will update  too :
+- [ ] [Fabric8 Docker](https://github.com/fabric8io/docker-maven-plugin)
+- [ ] [Fabric8 Vertx](https://vmp.fabric8.io/)
+- [ ] [frontend Maven plugin](https://github.com/eirslett/frontend-maven-plugin)
 
 Note
 ----

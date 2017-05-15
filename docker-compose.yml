@@ -3,7 +3,7 @@ version: "3"
 services:
 
   redis:
-    image: redis:3.0.7-alpine
+    image: redis:3-alpine
     container_name: vds-redis
     environment:
       - TZ=${TZ}
