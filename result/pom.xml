@@ -65,6 +65,14 @@
                 <goal>shade</goal>
               </goals>
               <configuration>
+                <filters>
+                  <filter>
+                    <artifact>*:*</artifact>
+                    <excludes>
+                      <inclide>webroot</inclide>
+                    </excludes>
+                  </filter>
+                </filters>
                 <transformers>
                   <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                     <manifestEntries>
@@ -132,28 +140,6 @@
             </imageTags>
             <useConfigFile>true</useConfigFile>
           </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.7</version>
-          <executions>
-            <execution>
-              <id>copy-resources</id>
-              <phase>compile</phase>
-              <goals>
-                <goal>copy-resources</goal>
-              </goals>
-              <configuration>
-                <outputDirectory>${basedir}/target/classes/webroot/src</outputDirectory>
-                <resources>
-                  <resource>
-                    <directory>${project.build.directory}/webroot</directory>
-                    <filtering>true</filtering>
-                  </resource>
-                </resources>
-              </configuration>
-            </execution>
-          </executions>
         </plugin>
       </plugins>
     </build>

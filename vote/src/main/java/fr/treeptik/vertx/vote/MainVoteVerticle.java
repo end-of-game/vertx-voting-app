@@ -42,9 +42,11 @@ public class MainVoteVerticle extends AbstractVerticle {
     public void init(Vertx vertx, Context context) {
         super.init(vertx, context);
         try {
+            long start = System.currentTimeMillis();
             hostname = InetAddress.getLocalHost().getHostName();
+            logger.info("hostname.timex : " + (System.currentTimeMillis()-start));
             logger.info(hostname);
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             logger.error(e);
         }
     }
@@ -77,8 +79,8 @@ public class MainVoteVerticle extends AbstractVerticle {
 
         port = config().getInteger("http.port", 8080);
         redisHost = config().getString("redis.host", "localhost");
-        logger.info("http.port: {}", port);
-        logger.info("redis.host: {}",redisHost);
+        logger.info("http.port: "+ port);
+        logger.info("redis.host: "+redisHost);
 
         vertx.createHttpServer()
             .requestHandler(router::accept)
