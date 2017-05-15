@@ -53,6 +53,31 @@ Architecture
 * A Postgres database backed by a Docker volume
 * A **verticle** webapp which shows the results of the voting in real time
 
+Technical choice
+-----
+
+We choose to use these Maven plugin :
+
+For Verticle vote 
+
+* [https://github.com/spotify/docker-maven-plugin](Docker Spotify) 
+* [https://github.com/ktoso/maven-git-commit-id-plugin](Git Project13)
+* Homebrew script shell to build AngularJS artefact
+
+For Verticle worker
+* [https://github.com/spotify/docker-maven-plugin](Docker Spotify) 
+* [https://github.com/ktoso/maven-git-commit-id-plugin](Git Project13)
+
+For Verticle result
+
+* [https://github.com/spotify/docker-maven-plugin](Docker Spotify) 
+* [https://github.com/ktoso/maven-git-commit-id-plugin](Git Project13)
+* [https://github.com/eirslett/frontend-maven-plugin](frontend Maven plugin)
+
+In a next future, we will use too :
+- [ ] [https://github.com/fabric8io/docker-maven-plugin](Fabric8 Docker)
+- [ ] [https://vmp.fabric8.io/](Fabric8 Vertx)
+
 Note
 ----
 
