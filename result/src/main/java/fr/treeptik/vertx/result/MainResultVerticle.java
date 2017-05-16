@@ -67,9 +67,11 @@ public class MainResultVerticle extends AbstractVerticle {
 
             } else {
                 logger.error("Connection or Operation Failed " + conn.cause());
+                vertx.close();
             }
         });
     }
+
     public void startServer() {
         final Router router = Router.router(vertx);
 

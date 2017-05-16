@@ -2,18 +2,19 @@ version: "3"
 
 services:
 
-  vds-redis:
+  redis:
     image: redis:3.0.7-alpine
     environment:
       - TZ=${TZ}
+    ports: ["6379:6379"]
     networks:
       - front-tier
     deploy:
       placement:
         constraints: [node.role == manager]
 
-  vds-postgres:
-    image: postgres:9.6
+  postgres:
+    image: postgres:9.6-alpine
     environment:
       - POSTGRES_USER=postgres
       - TZ=${TZ}
@@ -25,35 +26,38 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  vds-vote:
+  vote:
     image: "vertxswarm/verticle-vote:latest"
     ports:
       - 8080:8080
     environment:
       - TZ=${TZ}
+    restart: always
     depends_on:
-      - vds-redis
+      - redis
     networks:
       - front-tier
 
-  vds-result:
+  result:
     image: "vertxswarm/verticle-result:latest"
     ports:
       - 8081:8081
     environment:
       - TZ=${TZ}
+    restart: always
     depends_on:
-      - vds-postgres
+      - postgres
     networks:
       - back-tier
 
-  vds-worker:
+  worker:
     image: "vertxswarm/verticle-worker:latest"
     environment:
       - TZ=${TZ}
     depends_on:
-      - vds-postgres
-      - vds-redis
+      - postgres
+      - redis
+    restart: always
     networks:
       - front-tier
       - back-tier

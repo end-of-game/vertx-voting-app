@@ -1,9 +1,14 @@
 package fr.treeptik.vertx.worker;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Context;
 import io.vertx.core.Future;
+import io.vertx.core.Vertx;
+import io.vertx.core.dns.DnsClient;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.logging.Logger;
+import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.PostgreSQLClient;
 import io.vertx.ext.sql.SQLConnection;
@@ -12,6 +17,8 @@ import io.vertx.redis.RedisClient;
 import io.vertx.redis.RedisOptions;
 
 public class MainWorkerVerticle extends AbstractVerticle {
+
+    private Logger logger = LoggerFactory.getLogger(MainWorkerVerticle.class.getName());
 
     private SQLConnection connection;
     private RedisClient redis;
@@ -22,7 +29,10 @@ public class MainWorkerVerticle extends AbstractVerticle {
         String redisHost = config().getString("redis.host", "localhost");
         String postgresHost = config().getString("postgres.host", "localhost");
 
-        redis = RedisClient.create(vertx, new RedisOptions().setHost(redisHost));
+        logger.info("Connect to redis.host: " + redisHost);
+        logger.info("Connect to postgres.host: " + postgresHost);
+
+        redis = RedisClient.create(vertx, new RedisOptions().setHost(redisHost).setPort(6379));
 
         JsonObject postgreSQLClientConfig = new JsonObject().put("host", postgresHost);
         postgreSQLClientConfig.put("database", "postgres")
@@ -32,24 +42,27 @@ public class MainWorkerVerticle extends AbstractVerticle {
         postgreSQLClient.getConnection(conn -> {
             if (conn.succeeded()) {
                 this.connection = conn.result();
-                System.out.println("Connection POSTGRESQL OK");
+                logger.info("Connection POSTGRESQL OK");
                 String sql = "CREATE TABLE IF NOT EXISTS votes (id SERIAL PRIMARY KEY," +
                         "vote_id varchar(255), vote varchar(255));";
-
                 this.connection.execute(sql, execute -> {
                     if(execute.succeeded()) {
-                        System.out.println("Table votes created !");
-                        gatherVotes();
+                        logger.info("Table votes created !");
                     } else {
-                        System.out.println("Creation table Failed" + execute.cause());
+                        logger.error("Creation table Failed" + execute.cause());
                     }
                 });
-
             } else {
-                System.out.println("Connection or Operation Failed " + conn.cause());
+                logger.error("Connection or Operation Failed : " + conn.cause());
+                // do not use System.exit...
+                vertx.close();
             }
         });
+
+        // Get the votes from Redis
+        gatherVotes();
     }
+
 
     public void updateVote(String voteId, String vote) {
 
@@ -58,7 +71,7 @@ public class MainWorkerVerticle extends AbstractVerticle {
         this.connection.updateWithParams(deletePreviousVote, deleteParams, res -> {
            if(res.succeeded()) {
                UpdateResult updateResult = res.result();
-               System.out.println("Delete previous vote: " + updateResult.getUpdated());
+               logger.info("Delete previous vote: " + updateResult.getUpdated());
 
                String insert = "INSERT INTO votes(vote_id, vote) VALUES(?, ?)";
                JsonArray insertParams = new JsonArray()
@@ -67,13 +80,13 @@ public class MainWorkerVerticle extends AbstractVerticle {
                this.connection.updateWithParams(insert, insertParams, insertRes -> {
                   if(insertRes.succeeded()) {
                       UpdateResult insertResult = insertRes.result();
-                      System.out.println("Insert vote: " + insertResult.getUpdated());
+                      logger.info("Insert vote: " + insertResult.getUpdated());
                   } else {
-                      System.out.println("Error insert vote " + insertRes.cause());
+                      logger.error("Error insert vote " + insertRes.cause());
                   }
                });
            } else {
-               System.out.println("Error delete previous vote " + res.cause());
+               logger.error("Error delete previous vote " + res.cause());
            }
         });
 
@@ -85,14 +98,14 @@ public class MainWorkerVerticle extends AbstractVerticle {
             redis.blpop("vote", 2, res -> {
                 if (res.succeeded()) {
                     if (res.result()!=null){
-                        System.out.println("worker: " + res.result().getString(1));
+                        logger.debug("worker: " + res.result().getString(1));
                         JsonObject voteData = new JsonObject(res.result().getString(1));
                         String voteId = voteData.getString("vote_id");
                         String vote = voteData.getString("vote");
                         this.updateVote(voteId, vote);
                     }
                 } else {
-                    System.out.println("Connection or Operation Failed " + res.cause());
+                    logger.error("Connection or Operation Failed " + res.cause());
                 }
             });
 

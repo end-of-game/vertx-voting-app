@@ -34,7 +34,7 @@ public class MainVoteVerticle extends AbstractVerticle {
     private static final String VOTE = "vote";
     private static final String HOSTNAME_FIELD = "hostname";
 
-    private String hostname;
+    private String hostname = "localhost";
     private Integer port;
     private String redisHost;
 
@@ -42,10 +42,13 @@ public class MainVoteVerticle extends AbstractVerticle {
     public void init(Vertx vertx, Context context) {
         super.init(vertx, context);
         try {
-            long start = System.currentTimeMillis();
-            hostname = InetAddress.getLocalHost().getHostName();
-            logger.info("hostname.timex : " + (System.currentTimeMillis()-start));
-            logger.info(hostname);
+            boolean resolve = config().getBoolean("hostname.resolve", false);
+            if (resolve) {
+                long start = System.currentTimeMillis();
+                hostname = InetAddress.getLocalHost().getHostName();
+                logger.info("hostname.timex : " + (System.currentTimeMillis()-start));
+            }
+            logger.info("hostname : " + hostname);
         } catch (Exception e) {
             logger.error(e);
         }
@@ -111,12 +114,12 @@ public class MainVoteVerticle extends AbstractVerticle {
         JsonObject response = new JsonObject();
         response.put(VOTE_ID, checkID(context));
         response.put(VOTE, vote);
-        System.out.println(response.toString());
+
         redis.rpush("vote", response.toString(), r -> {
             if (r.succeeded()) {
-                System.out.println("key stored");
+                logger.info("key stored");
             } else {
-                System.out.println("Connection or Operation Failed " + r.cause());
+                logger.error("Connection or Operation Failed " + r.cause());
             }
         });
         context.response().putHeader(HttpHeaders.CONTENT_TYPE, "application/json").end(response.toString());

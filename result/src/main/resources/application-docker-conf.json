@@ -1,3 +1,3 @@
 {
-  "postgres.host" : "vds-postgres"
+  "postgres.host" : "postgres"
 }

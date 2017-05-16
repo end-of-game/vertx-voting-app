@@ -16,8 +16,7 @@ COPY log4j2.xml $VERTICLE_HOME
 # Launch the verticle
 WORKDIR $VERTICLE_HOME
 ENTRYPOINT ["sh", "-c"]
-CMD ["exec java -Dorg.apache.logging.log4j.simplelog.StatusLogger.level=TRACE \
-                -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.Log4j2LogDelegateFactory \
+CMD ["exec java -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.Log4j2LogDelegateFactory \
                 -jar $VERTICLE_FILE \
                 --conf $VERTICLE_CONF"]
 
