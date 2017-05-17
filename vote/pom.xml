@@ -150,7 +150,7 @@
             <imageTag>latest</imageTag>
             <imageTag>${project.version}</imageTag>
           </imageTags>
-          <useConfigFile>true</useConfigFile>
+          <useConfigFile>false</useConfigFile>
         </configuration>
       </plugin>
       <plugin>
