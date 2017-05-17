@@ -6,12 +6,13 @@ services:
     image: redis:3.0.7-alpine
     environment:
       - TZ=${TZ}
-    ports: ["6379:6379"]
     networks:
       - front-tier
     deploy:
       placement:
         constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
 
   postgres:
     image: postgres:9.6-alpine
@@ -29,26 +30,41 @@ services:
   vote:
     image: "vertxswarm/verticle-vote:latest"
     ports:
-      - 8080:8080
+      - 8080
     environment:
       - TZ=${TZ}
-    restart: always
     depends_on:
       - redis
     networks:
       - front-tier
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
 
   result:
     image: "vertxswarm/verticle-result:latest"
     ports:
-      - 8081:8081
+      - 8081
     environment:
       - TZ=${TZ}
-    restart: always
     depends_on:
       - postgres
     networks:
       - back-tier
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
 
   worker:
     image: "vertxswarm/verticle-worker:latest"
@@ -57,16 +73,44 @@ services:
     depends_on:
       - postgres
       - redis
-    restart: always
     networks:
       - front-tier
       - back-tier
     deploy:
       placement:
         constraints: [node.role == manager]
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8080
+    stop_grace_period: 5s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  # docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer --no-auth
+  #portainer:
+  #  image: portainer/portainer
+  #  ports:
+  #    - 9000:9000
+  #  volumes:
+  #    - "/var/run/docker.sock:/var/run/docker.sock"
+  #    - "portainer-data:/data"
+  #  command: --no-auth
+  #  deploy:
+  #    placement:
+  #      constraints: [node.role == manager]
 
 volumes:
   db-data:
+  portainer-data:
 
 networks:
   front-tier:
