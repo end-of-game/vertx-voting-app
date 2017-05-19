@@ -38,6 +38,8 @@ services:
     networks:
       - front-tier
     deploy:
+      placement:
+        constraints: [node.role != manager]
       replicas: 2
       update_config:
         parallelism: 2
@@ -57,6 +59,8 @@ services:
     networks:
       - back-tier
     deploy:
+      placement:
+        constraints: [node.role != manager]
       replicas: 1
       update_config:
         parallelism: 2

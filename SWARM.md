@@ -31,6 +31,9 @@ open http://$(docker-machine ip poc-manager):5000
 open http://$(docker-machine ip pocmanager):8080
 open http://$(docker-machine ip pocmanager):8081
 
+# Increase verticles
+docker service update -d --replicas=10 poc_vote
+
 # Make a change and build image again
 # Update the image
 docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_result
@@ -44,4 +47,4 @@ docker-machine ssh worker3 "docker swarm join --token `docker $(docker-machine c
 docker-machine create --driver virtualbox worker4
 docker-machine ssh worker4 "docker swarm join --token `docker $(docker-machine config manager) swarm join-token worker -q` $(docker-machine ip manager)"
 
-docker service update --replicas=0 vote_result
+
