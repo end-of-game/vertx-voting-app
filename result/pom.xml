@@ -133,8 +133,9 @@
                 <include>verticle-result-fatboyslim.jar</include>
               </rescource>
             </resources>
-            <forceTags>false</forceTags>-->
+            <forceTags>true</forceTags>
             <imageTags>
+              <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
               <imageTag>${project.version}</imageTag>
               <imageTag>latest</imageTag>
             </imageTags>

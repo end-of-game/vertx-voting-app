@@ -119,10 +119,11 @@
                 <include>verticle-worker-fatboyslim.jar</include>
               </rescource>
             </resources>
-            <forceTags>false</forceTags>
+            <forceTags>true</forceTags>
             <imageTags>
-              <imageTag>${project.version}</imageTag>
               <imageTag>latest</imageTag>
+              <imageTag>${project.version}</imageTag>
+              <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
             </imageTags>
             <useConfigFile>false</useConfigFile>
           </configuration>

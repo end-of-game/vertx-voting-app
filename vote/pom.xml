@@ -145,10 +145,11 @@
               <include>verticle-vote-fatboyslim.jar</include>
             </resource>
           </resources>
-          <forceTags>false</forceTags>
+          <forceTags>true</forceTags>
           <imageTags>
             <imageTag>latest</imageTag>
             <imageTag>${project.version}</imageTag>
+            <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
           </imageTags>
           <useConfigFile>false</useConfigFile>
         </configuration>
