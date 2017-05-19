@@ -39,12 +39,11 @@ docker service update -d --replicas=10 poc_vote
 docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_result
 
 # Oups erreur on retourne en arrière
-docker service update --rollback vote_vote
+docker service update -d --rollback poc_result
 
-docker-machine create --driver virtualbox worker3
-docker-machine ssh worker3 "docker swarm join --token `docker $(docker-machine config manager) swarm join-token worker -q` $(docker-machine ip manager)"
+docker-machine create --driver virtualbox poc-worker3
+docker-machine ssh poc-worker3 "docker swarm join --token `docker $(docker-machine config poc_manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
 
-docker-machine create --driver virtualbox worker4
-docker-machine ssh worker4 "docker swarm join --token `docker $(docker-machine config manager) swarm join-token worker -q` $(docker-machine ip manager)"
-
+docker-machine create --driver virtualbox poc-worker4
+docker-machine ssh poc-worker4 "docker swarm join --token `docker $(docker-machine config poc_manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
 
