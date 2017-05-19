@@ -31,6 +31,10 @@ open http://$(docker-machine ip poc-manager):5000
 open http://$(docker-machine ip pocmanager):8080
 open http://$(docker-machine ip pocmanager):8081
 
+# Portainer
+# docker-machine ssh poc-manager
+# docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer --no-auth
+
 # Increase verticles
 docker service update -d --replicas=10 poc_vote
 
@@ -42,8 +46,8 @@ docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_resul
 docker service update -d --rollback poc_result
 
 docker-machine create --driver virtualbox poc-worker3
-docker-machine ssh poc-worker3 "docker swarm join --token `docker $(docker-machine config poc_manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
+docker-machine ssh poc-worker3 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
 
 docker-machine create --driver virtualbox poc-worker4
-docker-machine ssh poc-worker4 "docker swarm join --token `docker $(docker-machine config poc_manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
+docker-machine ssh poc-worker4 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
 
