@@ -1,7 +1,10 @@
 <section class="container">
   <div [ngClass]="{'selected': myChoice === choice}" class="item" (click)="choose(choice);" *ngFor="let choice of choices; let i = index">
     <article>
-      <h1>{{choice}}</h1>
+	 <img src="./assets/img/{{choice}}.png" />
+      <h1>
+   {{choice}} 
+      </h1>
     </article>
   </div>
 </section>
@@ -14,5 +17,5 @@
 <div id="hostname" style="font-size: 1.5em;">
   Processed by container ID
   <br>
-  {{hostname}}
+ {{hostname}}
 </div>

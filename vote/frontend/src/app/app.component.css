@@ -13,6 +13,11 @@ h1 {
 /* Pattern styles */
 .container {
   display: flex;
+  padding-left: 300px;
+  padding-right: 300px;
+  margin-left: 10px;
+  margin-right: 10px;
+
 }
 section {
     height: 70%;
@@ -20,12 +25,19 @@ section {
 .item {
   flex: 1;
   cursor: pointer;
-  background-color: rgb(150, 150, 150);
+  background-color: #EFEFEF;
 }
 
 .item.selected {
-  background-color: #00cbca !important;
+  background-color: #9355a6 !important;
 }
+
+
+#tip {
+  color: #9355a6;
+}
+
+
 /*
 .item:nth-child(odd) {
   background-color: #1aaaf8;
@@ -34,3 +46,8 @@ section {
 .item:nth-child(even) {
   background-color: #00cbca;
 }*/
+
+
+
+
+

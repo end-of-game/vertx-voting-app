@@ -12,3 +12,58 @@ body {
   text-align: center;
   background-color: #F7F8F9;
 }
+
+
+/*********************** Menu Bar ****************************/
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-right: 200px;
+    overflow: hidden;
+}
+
+.navbar-collapse {
+	background: white;
+}
+
+
+li {
+    float: right;
+}
+
+li a {
+    display: inline-block;
+    color: #b2b2b2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #FFFFFF;
+}
+
+.separator {
+	content: " | ";
+	color: black;
+}
+
+.navbar-brand {
+	float:left;
+	padding:12.5px 15px;
+	padding-left: 300px;
+	font-size:5px;
+	line-height:5px;
+	height:5px
+}
+.navbar-brand:focus,.navbar-brand:hover {
+	text-decoration:none
+}
+.navbar-brand>img {
+	display:block
+}
+.navbar .navbar-brand img {
+	height:36px
+}
