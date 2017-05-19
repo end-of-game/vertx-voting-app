@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.vertx.starter</groupId>
     <artifactId>vertx-dockerswarm-project</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.0.0-RELEASE</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -95,7 +95,7 @@
                     </resource>
                 </resources>
                 <forceTags>true</forceTags>
-                <useConfigFile>false</useConfigFile>
+                <useConfigFile>true</useConfigFile>
             </configuration>
         </plugin>
         </plugins>

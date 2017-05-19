@@ -6,12 +6,12 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>verticle-vote</artifactId>
   <groupId>io.vertx.vote</groupId>
-  <version>1.0-RELEASE</version>
+  <version>1.0.0-RELEASE</version>
 
   <parent>
     <groupId>io.vertx.starter</groupId>
     <artifactId>vertx-dockerswarm-project</artifactId>
-    <version>1.0-RELEASE</version>
+    <version>1.0.0-RELEASE</version>
   </parent>
 
   <properties>
@@ -151,7 +151,7 @@
             <imageTag>${project.version}</imageTag>
             <imageTag>${project.version}.${git.commit.id.abbrev}</imageTag>
           </imageTags>
-          <useConfigFile>false</useConfigFile>
+          <useConfigFile>true</useConfigFile>
         </configuration>
       </plugin>
       <plugin>

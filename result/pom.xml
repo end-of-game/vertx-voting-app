@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>verticle-result</artifactId>
     <groupId>io.vertx.result</groupId>
-    <version>1.0-RELEASE</version>
+  <version>1.0.0-RELEASE</version>
 
     <parent>
       <groupId>io.vertx.starter</groupId>
       <artifactId>vertx-dockerswarm-project</artifactId>
-      <version>1.0-RELEASE</version>
+      <version>1.0.0-RELEASE</version>
     </parent>
 
     <properties>
