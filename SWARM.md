@@ -33,7 +33,8 @@ open http://$(docker-machine ip pocmanager):8081
 
 # Make a change and build image again
 # Update the image
-docker service update --image zepouet/examplevotingapp_vote:v2 poc_vote
+docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_result
+
 # Oups erreur on retourne en arrière
 docker service update --rollback vote_vote
 

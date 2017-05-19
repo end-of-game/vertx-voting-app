@@ -85,10 +85,10 @@ services:
         max_attempts: 3
 
   visualizer:
-    image: dockersamples/visualizer:stable
+    image: dockersamples/visualizer:latest
     ports:
-      - 8080
-    stop_grace_period: 5s
+      - 5000:8080
+    stop_grace_period: 30s
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     deploy:
