@@ -32,6 +32,11 @@ services:
       - redis
     networks:
       - front-tier
+    labels:
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.backend=vote"
+      - "traefik.port=8080"
+      - "traefik.frontend.rule=Host:vote.local"
 
   result:
     image: "vertxswarm/verticle-result:${TAG_RESULT}"
@@ -44,6 +49,11 @@ services:
       - postgres
     networks:
       - back-tier
+    labels:
+      - "traefik.frontend.entryPoints=http"
+      - "traefik.backend=result"
+      - "traefik.port=8081"
+      - "traefik.frontend.rule=Host:result.local"
 
   worker:
     image: "vertxswarm/verticle-worker:${TAG_WORKER}"
@@ -57,11 +67,55 @@ services:
       - front-tier
       - back-tier
 
+  sozu:
+    image: geal/sozu
+    command: ["start", "-c", "/etc/sozu/sozu.toml"]
+    volumes:
+      - sozu-socket:/var/run/sozu
+      - ./sozu/config/sozu.toml:/etc/sozu/sozu.toml
+    ports:
+      - "80:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  sozu-manager:
+    image: geal/manager
+    #entrypoint: ["sh"]
+    command: ["--config", "/etc/sozu/sozu.toml", "--api", "http://traefik:8080/api"]
+    volumes:
+      - sozu-socket:/var/run/sozu
+      - ./sozu/config/sozu.toml:/etc/sozu/sozu.toml
+    depends_on:
+      - sozu
+      - traefik
+    networks:
+      - front-tier
+      - back-tier
+
+  traefik:
+    image: traefik
+    command: --web --docker --docker.domain=${CU_DOMAIN} --logLevel=DEBUG --docker.exposedbydefault=true --docker.watch=true
+    environment:
+      - "TZ=${TZ}"
+    ports:
+      - "9090:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./sozu/traefik.toml:/traefik.toml
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - front-tier
+      - back-tier
+
 volumes:
   db-data:
+  sozu-socket:
 
 networks:
   front-tier:
   back-tier:
+
 
 

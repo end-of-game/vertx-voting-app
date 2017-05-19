@@ -13,8 +13,5 @@ mvn clean compile exec:java
 
 # Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `../webroot/` directory.
-docker build -t vertx-voting-app/vote-front:dev .
-
-# RUN
-docker run --name angular-client -p 4200:4200 vertx-voting-app/vote-front:dev
+Run `npm run build` to build the project. 
+The build artifacts will be stored in the `../target/classes/webroot` directory.
