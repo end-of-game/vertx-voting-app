@@ -11,8 +11,11 @@ import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.healthchecks.HealthCheckHandler;
+import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.sql.UpdateResult;
+import io.vertx.ext.web.Router;
 import io.vertx.redis.RedisClient;
 import io.vertx.redis.RedisOptions;
 
@@ -24,7 +27,8 @@ public class MainWorkerVerticle extends AbstractVerticle {
     private RedisClient redis;
 
     @Override
-    public void start(Future<Void> future) {
+    public void start() {
+        final Router router = Router.router(vertx);
 
         String redisHost = config().getString("redis.host", "localhost");
         String postgresHost = config().getString("postgres.host", "localhost");
@@ -58,6 +62,32 @@ public class MainWorkerVerticle extends AbstractVerticle {
                 vertx.close();
             }
         });
+
+        HealthCheckHandler handler = HealthCheckHandler.create(vertx);
+        // Add a handler for redis. Needed with HEALTHCHECK command from Docker
+        redis = RedisClient.create(vertx, new RedisOptions().setHost(redisHost));
+        handler.register("redis",
+                future -> {
+                    final String echoTest = "Y a degun ?";
+                    redis.echo(echoTest, echo -> {
+                        if (!echoTest.equalsIgnoreCase(echo.result())) {
+                            future.fail(echo.cause());
+                        } else {
+                            future.complete(Status.OK());
+                        }
+                    });
+                });
+        // Add a handler for Postgres. Needed with HEALTHCHECK command from Docker
+        handler.register("database",
+            future -> postgreSQLClient.getConnection(connection -> {
+                if (connection.failed()) {
+                    future.fail(connection.cause());
+                } else {
+                    connection.result().close();
+                    future.complete(Status.OK());
+                }
+            }));
+        router.get("/health").handler(handler);
 
         // Get the votes from Redis
         gatherVotes();

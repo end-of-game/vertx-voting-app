@@ -12,3 +12,4 @@ worker/.vertx/
 worker/target/generated-sources/
 target/
 worker/target/
+/vote/src/main/frontend/node_modules/

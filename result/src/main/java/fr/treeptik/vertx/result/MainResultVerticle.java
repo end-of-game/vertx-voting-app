@@ -15,6 +15,8 @@ import io.vertx.core.logging.SLF4JLogDelegate;
 import io.vertx.core.logging.SLF4JLogDelegateFactory;
 import io.vertx.ext.asyncsql.AsyncSQLClient;
 import io.vertx.ext.asyncsql.PostgreSQLClient;
+import io.vertx.ext.healthchecks.HealthCheckHandler;
+import io.vertx.ext.healthchecks.Status;
 import io.vertx.ext.sql.SQLConnection;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.*;
@@ -34,6 +36,8 @@ public class MainResultVerticle extends AbstractVerticle {
 
     private SQLConnection connection;
 
+    private AsyncSQLClient postgreSQLClient;
+
     @Override
     public void start(Future<Void> future) {
         this.startServer();
@@ -44,11 +48,11 @@ public class MainResultVerticle extends AbstractVerticle {
         postgresHost = config().getString("postgres.host", "localhost");
         JsonObject postgreSQLClientConfig = new JsonObject().put("host", postgresHost);
 
-        postgreSQLClientConfig.put("database", "postgres")
+        postgreSQLClientConfig
+                .put("database", "postgres")
                 .put("username", "postgres");
 
-        AsyncSQLClient postgreSQLClient = PostgreSQLClient.createShared(vertx, postgreSQLClientConfig);
-
+        postgreSQLClient = PostgreSQLClient.createShared(vertx, postgreSQLClientConfig);
         postgreSQLClient.getConnection(conn -> {
             if (conn.succeeded()) {
                 this.connection = conn.result();
@@ -92,6 +96,19 @@ public class MainResultVerticle extends AbstractVerticle {
 
         StaticHandler staticHandler = StaticHandler.create();
         staticHandler.setCachingEnabled(false);
+
+        HealthCheckHandler handler = HealthCheckHandler.create(vertx);
+        // Add a handler for Postgres. Needed with HEALTHCHECK command from Docker
+        handler.register("database",
+                future -> postgreSQLClient.getConnection(connection -> {
+                    if (connection.failed()) {
+                        future.fail(connection.cause());
+                    } else {
+                        connection.result().close();
+                        future.complete(Status.OK());
+                    }
+                }));
+        router.get("/health").handler(handler);
 
         /* SockJS / EventBus */
         router.route("/eventbus/*").handler(eventBusHandler());

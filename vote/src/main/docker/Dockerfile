@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:8-jre
 
 ENV VERTICLE_FILE ${project.artifactId}-fatboyslim.jar
 
@@ -12,6 +12,9 @@ EXPOSE 8080
 COPY $VERTICLE_FILE $VERTICLE_HOME/
 COPY application-docker-conf.json $VERTICLE_CONF
 COPY log4j2.xml $VERTICLE_HOME
+
+HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
+    CMD curl --fail http://localhost:8080/health || exit 1
 
 # Launch the verticle
 WORKDIR $VERTICLE_HOME

@@ -106,9 +106,8 @@
                 <targetPath>/</targetPath>
                 <directory>${project.basedir}</directory>
                 <excludes>
-                  <exclude>webroot/**/*</exclude>
-                  <exclude>frontend/**/*</exclude>
-                  <exclude>target/**/*</exclude>
+                  <exclude>src/**/</exclude>
+                  <exclude>target/**</exclude>
                   <exclude>pom.xml</exclude>
                   <exclude>*.iml</exclude>
                 </excludes>
