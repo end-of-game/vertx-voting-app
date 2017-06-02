@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 
 services:
 
@@ -40,7 +40,7 @@ services:
     deploy:
       placement:
         constraints: [node.role != manager]
-      replicas: 2
+      replicas: 1
       update_config:
         parallelism: 2
         delay: 10s
@@ -93,7 +93,7 @@ services:
     image: dockersamples/visualizer:latest
     ports:
       - 5000:8080
-    stop_grace_period: 30s
+    stop_grace_period: 5s
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
     deploy:

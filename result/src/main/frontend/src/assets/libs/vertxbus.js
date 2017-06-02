@@ -45,7 +45,7 @@ var vertx = vertx || {};
 }(function(SockJS) {
 
   vertx.EventBus = function(url, options) {
-  
+
     var that = this;
     var sockJSConn = new SockJS(url, undefined, options);
     var handlerMap = {};
@@ -59,18 +59,18 @@ var vertx = vertx || {};
     if (!pingInterval) {
       pingInterval = 5000;
     }
-  
+
     that.onopen = null;
     that.onclose = null;
 
     that.send = function(address, message, replyHandler) {
       sendOrPub("send", address, message, replyHandler)
-    }
-  
+    };
+
     that.publish = function(address, message) {
       sendOrPub("publish", address, message, null)
-    }
-  
+    };
+
     that.registerHandler = function(address, handler) {
       checkSpecified("address", 'string', address);
       checkSpecified("handler", 'function', handler);
@@ -86,8 +86,8 @@ var vertx = vertx || {};
       } else {
         handlers[handlers.length] = handler;
       }
-    }
-  
+    };
+
     that.unregisterHandler = function(address, handler) {
       checkSpecified("address", 'string', address);
       checkSpecified("handler", 'function', handler);
@@ -98,25 +98,25 @@ var vertx = vertx || {};
         if (idx != -1) handlers.splice(idx, 1);
         if (handlers.length == 0) {
           // No more local handlers so we should unregister the connection
-  
+
           var msg = { type : "unregister",
                       address: address};
           sockJSConn.send(JSON.stringify(msg));
           delete handlerMap[address];
         }
       }
-    }
-  
+    };
+
     that.close = function() {
       checkOpen();
       state = vertx.EventBus.CLOSING;
       sockJSConn.close();
-    }
-  
+    };
+
     that.readyState = function() {
       return state;
-    }
-  
+    };
+
     sockJSConn.onopen = function() {
       // Send the first ping then send a ping every pingInterval milliseconds
       sendPing();
@@ -126,7 +126,7 @@ var vertx = vertx || {};
         that.onopen();
       }
     };
-  
+
     sockJSConn.onclose = function() {
       state = vertx.EventBus.CLOSED;
       if (pingTimerID) clearInterval(pingTimerID);
@@ -134,7 +134,7 @@ var vertx = vertx || {};
         that.onclose();
       }
     };
-  
+
     sockJSConn.onmessage = function(e) {
       var msg = e.data;
       var json = JSON.parse(msg);
@@ -169,15 +169,15 @@ var vertx = vertx || {};
           handler(body, replyHandler);
         }
       }
-    }
+    };
 
     function sendPing() {
       var msg = {
         type: "ping"
-      }
+      };
       sockJSConn.send(JSON.stringify(msg));
     }
-  
+
     function sendOrPub(sendOrPub, address, message, replyHandler) {
       checkSpecified("address", 'string', address);
       checkSpecified("replyHandler", 'function', replyHandler, true);
@@ -193,13 +193,13 @@ var vertx = vertx || {};
       var str = JSON.stringify(envelope);
       sockJSConn.send(str);
     }
-  
+
     function checkOpen() {
       if (state != vertx.EventBus.OPEN) {
         throw new Error('INVALID_STATE_ERR');
       }
     }
-  
+
     function checkSpecified(paramName, paramType, param, optional) {
       if (!optional && !param) {
         throw new Error("Parameter " + paramName + " must be specified");
@@ -208,16 +208,16 @@ var vertx = vertx || {};
         throw new Error("Parameter " + paramName + " must be of type " + paramType);
       }
     }
-  
+
     function isFunction(obj) {
       return !!(obj && obj.constructor && obj.call && obj.apply);
     }
-  
+
     function makeUUID(){return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
         .replace(/[xy]/g,function(a,b){return b=Math.random()*16,(a=="y"?b&3|8:b|0).toString(16)})}
-  
-  }
-  
+
+  };
+
   vertx.EventBus.CONNECTING = 0;
   vertx.EventBus.OPEN = 1;
   vertx.EventBus.CLOSING = 2;

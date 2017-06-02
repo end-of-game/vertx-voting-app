@@ -85,7 +85,7 @@ services:
     command: ["--config", "/etc/sozu/sozu.toml", "--api", "http://traefik:8080/api"]
     volumes:
       - sozu-socket:/var/run/sozu
-      - ./sozu/config/sozu.toml:/etc/sozu/sozu.toml
+      - ./reverse-proxy/sozu/sozu.toml:/etc/sozu/sozu.toml
     depends_on:
       - sozu
       - traefik
@@ -102,7 +102,7 @@ services:
       - "9090:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./sozu/traefik.toml:/traefik.toml
+      - ./reverse-proxy/discovery/traefik.toml:/traefik.toml
     labels:
       - "traefik.enable=false"
     networks:

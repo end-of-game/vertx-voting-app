@@ -3,14 +3,14 @@ import { Observable, BehaviorSubject } from 'rxjs/Rx'
 
 import { Result } from '../models/result';
 import { environment } from './../../environments/environment';
-	
+
 declare var vertx: any;
 @Injectable()
 export class ResultService {
 
   private BASE_URL_WEBSOCKET: string = environment.API_BASE_URL + '/eventbus';
   private eb: any;
-  
+
   public result$: BehaviorSubject<any> = new BehaviorSubject<any>('');
   constructor() {
     this.eb = new vertx.EventBus(this.BASE_URL_WEBSOCKET);
@@ -22,7 +22,7 @@ export class ResultService {
             return acc + elem[1];
           }, 0);
 
-          finalResult = finalResult.map((elem: [String, number]) => {;
+          finalResult = finalResult.map((elem: [String, number]) => {
             return {
               choice: elem[0],
               result: ((elem[1] * 100) / totalVote),
