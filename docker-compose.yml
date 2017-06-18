@@ -71,7 +71,7 @@ services:
     image: geal/sozu
     command: ["start", "-c", "/etc/sozu/sozu.toml"]
     volumes:
-      - ./reserse-proxy/sozu/config.toml:/etc/sozu/sozu.toml
+      - ./reverse-proxy/sozu/config.toml:/etc/sozu/sozu.toml
       - sozu-socket:/var/run/sozu
     ports:
       - "80:80"
