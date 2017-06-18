@@ -71,8 +71,8 @@ services:
     image: geal/sozu
     command: ["start", "-c", "/etc/sozu/sozu.toml"]
     volumes:
+      - ./reserse-proxy/sozu/config.toml:/etc/sozu/sozu.toml
       - sozu-socket:/var/run/sozu
-      - ./sozu/config/sozu.toml:/etc/sozu/sozu.toml
     ports:
       - "80:80"
     networks:
@@ -84,8 +84,8 @@ services:
     #entrypoint: ["sh"]
     command: ["--config", "/etc/sozu/sozu.toml", "--api", "http://traefik:8080/api"]
     volumes:
+      - ./reverse-proxy/sozu/config.toml:/etc/sozu/sozu.toml
       - sozu-socket:/var/run/sozu
-      - ./reverse-proxy/sozu/sozu.toml:/etc/sozu/sozu.toml
     depends_on:
       - sozu
       - traefik
@@ -94,7 +94,7 @@ services:
       - back-tier
 
   traefik:
-    image: traefik
+    image: traefik:1.2.0
     command: --web --docker --docker.domain=${CU_DOMAIN} --logLevel=DEBUG --docker.exposedbydefault=true --docker.watch=true
     environment:
       - "TZ=${TZ}"

@@ -1,4 +1,4 @@
-command_socket = "/var/run/sozu/socket"
+command_socket = "/var/run/sozu"
 saved_state    = "./state.json"
 log_level      = "debug"
 log_target     = "stdout"

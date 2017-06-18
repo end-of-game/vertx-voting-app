@@ -57,18 +57,7 @@ public class MainResultVerticle extends AbstractVerticle {
             if (conn.succeeded()) {
                 this.connection = conn.result();
                 logger.info("Connection POSTGRESQL OK");
-                String sql = "CREATE TABLE IF NOT EXISTS votes (id SERIAL PRIMARY KEY," +
-                        "vote_id varchar(255), vote varchar(255));";
-
-                this.connection.execute(sql, execute -> {
-                    if(execute.succeeded()) {
-                        logger.info("Table votes created !");
-                        this.getVotes();
-                    } else {
-                        logger.info("Creation table Failed" + execute.cause());
-                    }
-                });
-
+                this.emitVotesResult();
             } else {
                 logger.error("Connection or Operation Failed " + conn.cause());
                 vertx.close();
@@ -127,7 +116,7 @@ public class MainResultVerticle extends AbstractVerticle {
         return handler;
     }
 
-    public void getVotes() {
+    private void emitVotesResult() {
         vertx.setPeriodic(1000, id -> {
             String query = "SELECT vote, COUNT(id) AS count FROM votes GROUP BY vote";
             this.connection.query(query, queryRes -> {

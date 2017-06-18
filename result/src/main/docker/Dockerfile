@@ -6,12 +6,15 @@ ENV VERTICLE_FILE ${project.artifactId}-fatboyslim.jar
 ENV VERTICLE_HOME /usr/verticles
 ENV VERTICLE_CONF $VERTICLE_HOME/application-docker-conf.json
 
-EXPOSE 8080
+EXPOSE 8081
 
 # Copy your fat jar to the container
 COPY $VERTICLE_FILE $VERTICLE_HOME/
 COPY application-docker-conf.json $VERTICLE_CONF
 COPY log4j2.xml $VERTICLE_HOME
+
+HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
+    CMD curl --fail http://localhost:8081/health || exit 1
 
 # Launch the verticle
 WORKDIR $VERTICLE_HOME

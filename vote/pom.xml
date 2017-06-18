@@ -44,7 +44,6 @@
         <artifactId>frontend-maven-plugin</artifactId>
         <version>1.4</version>
         <executions>
-
           <execution>
             <id>install node and npm</id>
             <goals>
@@ -58,7 +57,6 @@
               <workingDirectory>src/main/frontend</workingDirectory>
             </configuration>
           </execution>
-
           <execution>
             <id>npm install</id>
             <goals>
@@ -71,7 +69,6 @@
               <arguments>install</arguments>
             </configuration>
           </execution>
-
           <execution>
             <id>npm run build</id>
             <goals>
@@ -84,7 +81,6 @@
               <arguments>run build</arguments>
             </configuration>
           </execution>
-
         </executions>
       </plugin>
 
