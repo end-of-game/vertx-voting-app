@@ -26,7 +26,9 @@ docker-machine ssh poc-worker1 "docker swarm join --token `docker $(docker-machi
 
 # Promote worker2.
 ```
-docker-machine ssh poc-worker2 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
+docker-machine ssh poc-worker2 "docker swarm join --token \
+        `docker $(docker-machine config poc-manager) swarm join-token worker -q` \ 
+        $(docker-machine ip poc-manager)"
 ```
 
 # Copy docker-stack.yml to the manager.
