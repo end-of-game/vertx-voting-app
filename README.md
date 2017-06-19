@@ -45,7 +45,8 @@ docker stack deploy --compose-file docker-stack.yml demo
 Complete Swarm stack
 -----
 
-Follow this guide to provision a local but complete environment [Local Docker Swarm](./SWARM.md)
+Follow this guide to provision a local but complete environment [Local Docker Swarm](./SWARM.md).
+
 You can directly use the [Shell script](./swarm-init.sh) 
 
 ```
