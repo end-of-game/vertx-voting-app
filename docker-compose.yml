@@ -36,7 +36,7 @@ services:
       - "traefik.frontend.entryPoints=http"
       - "traefik.backend=vote"
       - "traefik.port=8080"
-      - "traefik.frontend.rule=Host:vote.local"
+      - "traefik.frontend.rule=Host:${URL_VOTE}"
 
   result:
     image: "vertxswarm/verticle-result:${TAG_RESULT}"
@@ -53,7 +53,7 @@ services:
       - "traefik.frontend.entryPoints=http"
       - "traefik.backend=result"
       - "traefik.port=8081"
-      - "traefik.frontend.rule=Host:result.local"
+      - "traefik.frontend.rule=Host:${URL_RESULT}"
 
   worker:
     image: "vertxswarm/verticle-worker:${TAG_WORKER}"
@@ -94,7 +94,7 @@ services:
       - back-tier
 
   traefik:
-    image: traefik:1.2.0
+    image: traefik:1.3.0
     command: --web --docker --docker.domain=${CU_DOMAIN} --logLevel=DEBUG --docker.exposedbydefault=true --docker.watch=true
     environment:
       - "TZ=${TZ}"

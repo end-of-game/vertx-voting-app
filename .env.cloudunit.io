@@ -4,5 +4,5 @@ TAG_RESULT=latest
 
 TZ=Europe/Paris
 
-URL_VOTE=vote.local
-URL_RESULT=result.local
+URL_VOTE=vote.cloudunit.io
+URL_RESULT=result.cloudunit.io
