@@ -21,14 +21,16 @@ docker-machine create --driver virtualbox poc-worker2
 
 # Promote worker1.
 ```
-docker-machine ssh poc-worker1 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
+docker-machine ssh poc-worker1 "docker swarm join --token \
+               `docker $(docker-machine config poc-manager) swarm join-token worker -q` \
+               $(docker-machine ip poc-manager)"
 ```
 
 # Promote worker2.
 ```
 docker-machine ssh poc-worker2 "docker swarm join --token \
-        `docker $(docker-machine config poc-manager) swarm join-token worker -q` \ 
-        $(docker-machine ip poc-manager)"
+               `docker $(docker-machine config poc-manager) swarm join-token worker -q` \ 
+               $(docker-machine ip poc-manager)"
 ```
 
 # Copy docker-stack.yml to the manager.
@@ -69,12 +71,4 @@ docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_resul
 docker service update -d --rollback poc_result
 ```
 
-# then to play
-```
-docker-machine create --driver virtualbox poc-worker3
-docker-machine ssh poc-worker3 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
-
-docker-machine create --driver virtualbox poc-worker4
-docker-machine ssh poc-worker4 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
-```
 
