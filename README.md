@@ -42,6 +42,21 @@ Once you have your swarm, in this directory run:
 docker stack deploy --compose-file docker-stack.yml demo
 ```
 
+Complete Swarm stack
+-----
+
+Follow this guide to provision a local but complete environment [Local Docker Swarm](./SWARM.md)
+You can directly use the [Shell script](./swarm-init.sh) 
+
+```
+docker-machine create --driver virtualbox poc-manager
+docker-machine ssh poc-manager "docker swarm init --advertise-addr $(docker-machine ip poc-manager)"
+docker-machine create --driver virtualbox poc-worker1
+docker-machine create --driver virtualbox poc-worker2
+docker-machine ssh poc-worker1 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
+docker-machine ssh poc-worker2 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
+```
+
 Architecture
 -----
 
