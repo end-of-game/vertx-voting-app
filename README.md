@@ -1,6 +1,10 @@
 Example Voting App
 =========
 
+This application is a rewrite of [https://github.com/dockersamples/example-voting-app](https://github.com/dockersamples/example-voting-app)
+We only use Java Vertx framework. In next releases, we will introduce other langages as Kotlin, Ceylon or JS.
+At this day, it is a nice proof-of-concept with the awesome Vertx.
+
 Getting started
 ---------------
 
@@ -15,7 +19,8 @@ mvn clean package docker:build
 You should have a similar result with `docker images`:
 
 ```
- ✘ nicolas@MacBook > ~/software/vertx/vertx-voting-app > master > docker images REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
+ ✘ nicolas@MacBook > ~/software/vertx/vertx-voting-app > master > docker images 
+REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
 vertxswarm/verticle-result             1.0-SNAPSHOT           ebeb1bb53f78        22 minutes ago      450 MB
 vertxswarm/verticle-result             1.0-SNAPSHOT.27015db   ebeb1bb53f78        22 minutes ago      450 MB
 vertxswarm/verticle-result             latest                 ebeb1bb53f78        22 minutes ago      450 MB
@@ -104,4 +109,10 @@ Note
 ----
 
 The voting application only accepts one vote per client. It does not register votes if a vote has already been submitted from a client.
+
+Thanks to
+----
+Greetings to:
+* Vertx team 
+* Guillaume Borg (from Treeptik)
 
