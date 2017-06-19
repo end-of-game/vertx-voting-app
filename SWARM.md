@@ -34,7 +34,7 @@ docker-machine ssh poc-worker2 "docker swarm join --token `docker $(docker-machi
 docker-machine scp ./docker-stack.yml poc-manager:/home/docker/.
 ```
 
-# Deploy the application stack based on the `docker-stack.yml`.
+# Deploy the application stack based on the docker-stack.yml
 ```
 docker-machine ssh poc-manager "docker stack deploy --compose-file docker-stack.yml poc"
 ```
@@ -57,8 +57,7 @@ open http://$(docker-machine ip pocmanager):8081
 docker service update -d --replicas=10 poc_vote
 ```
 
-# Make a change and build image again
-# Update the image
+# Make a change and build image again and update the image
 ```
 docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_result
 ```
