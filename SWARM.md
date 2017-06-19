@@ -3,7 +3,7 @@
 docker-machine rm -f poc-manager poc-worker1 poc-worker2
 ```
 
-# Create manager.
+## Create manager.
 ```
 docker-machine create --driver virtualbox poc-manager
 ```
