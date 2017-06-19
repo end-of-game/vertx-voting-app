@@ -15,7 +15,7 @@ mvn clean package docker:build
 You should have a similar result with `docker images`:
 
 ```
- ✘ nicolas@MacBook  ~/software/vertx/vertx-voting-app   master  docker images REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
+ ✘ nicolas@MacBook > ~/software/vertx/vertx-voting-app > master > docker images REPOSITORY                              TAG                    IMAGE ID            CREATED             SIZE
 vertxswarm/verticle-result             1.0-SNAPSHOT           ebeb1bb53f78        22 minutes ago      450 MB
 vertxswarm/verticle-result             1.0-SNAPSHOT.27015db   ebeb1bb53f78        22 minutes ago      450 MB
 vertxswarm/verticle-result             latest                 ebeb1bb53f78        22 minutes ago      450 MB
@@ -31,12 +31,15 @@ Run in this directory:
 ```
 docker-compose up
 ```
-The app will be running at [http://localhost:8000](http://localhost:8000), and the results will be at [http://localhost:8081](http://localhost:8081).
+The app will be running at:
+* [http://localhost:8000](http://localhost:8000) 
+* [http://localhost:8081](http://localhost:8081)
 
-You can use too if you update your `/etc/hosts` with the right address (maybe 127.0.0.1x).
+You can use too if you update your `/etc/hosts` 
 * [http://vote.local](http://vote.local)
 * [http://result.local](http://vote.local)
 
+![Voting server side](./images/votingapp.png)
 
 Docker Swarm
 -----
@@ -65,7 +68,7 @@ docker stack deploy --compose-file docker-stack.yml demo
 Architecture
 -----
 
-![Architecture diagram](architecture.png)
+![Architecture diagram](./images/architecture.png)
 
 * A **verticle** webapp which lets you vote between two options
 * A Redis queue which collects new votes
