@@ -3,31 +3,28 @@
 docker-machine rm -f poc-manager poc-worker1 poc-worker2
 ```
 
-# Create manager.
+# Create manager
 ```
 docker-machine create --driver virtualbox poc-manager
 ```
 
-# Promote manager.
+# Promote manager
 ```
 docker-machine ssh poc-manager "docker swarm init --advertise-addr $(docker-machine ip poc-manager)"
 ```
 
-# Create worker1.
+# Create workers.
 ```
 docker-machine create --driver virtualbox poc-worker1
 docker-machine create --driver virtualbox poc-worker2
 ```
 
-# Promote worker1.
+# Promote workers.
 ```
 docker-machine ssh poc-worker1 "docker swarm join --token \
                `docker $(docker-machine config poc-manager) swarm join-token worker -q` \
                $(docker-machine ip poc-manager)"
-```
 
-# Promote worker2.
-```
 docker-machine ssh poc-worker2 "docker swarm join --token \
                `docker $(docker-machine config poc-manager) swarm join-token worker -q` \ 
                $(docker-machine ip poc-manager)"
@@ -38,7 +35,7 @@ docker-machine ssh poc-worker2 "docker swarm join --token \
 docker-machine scp ./docker-stack.yml poc-manager:/home/docker/.
 ```
 
-# Deploy the application stack based on the docker-stack.yml
+# Deploy the application
 ```
 docker-machine ssh poc-manager "docker stack deploy --compose-file docker-stack.yml poc"
 ```
