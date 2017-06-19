@@ -48,9 +48,9 @@ docker-machine ls
 # See things running via browser.
 
 ```
-open http://$(docker-machine ip poc-manager):5000
-open http://$(docker-machine ip pocmanager):8080
-open http://$(docker-machine ip pocmanager):8081
+open http://$\(docker-machine ip poc-manager):5000
+open http://$\(docker-machine ip poc-manager):8080
+open http://$\(docker-machine ip poc-manager):8081
 ```
 
 # Increase verticles
