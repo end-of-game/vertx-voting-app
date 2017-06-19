@@ -46,7 +46,7 @@ Docker Swarm
 
 Alternately, if you want to run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/), first make sure you have a swarm. If you don't, run:
 
-Follow this guide to provision a local but complete environment [Local Docker Swarm](./SWARM.md).
+Follow this guide to provision a local but complete environment with tutorial [Local Docker Swarm](./SWARM.md).
 
 You can directly use the [Shell script](./swarm-init.sh) 
 
