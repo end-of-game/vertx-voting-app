@@ -33,17 +33,15 @@ docker-compose up
 ```
 The app will be running at [http://localhost:8000](http://localhost:8000), and the results will be at [http://localhost:8081](http://localhost:8081).
 
-Alternately, if you want to run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/), first make sure you have a swarm. If you don't, run:
-```
-docker swarm init
-```
-Once you have your swarm, in this directory run:
-```
-docker stack deploy --compose-file docker-stack.yml demo
-```
+You can use too if you update your `/etc/hosts` with the right address (maybe 127.0.0.1x).
+* [http://vote.local](http://vote.local)
+* [http://result.local](http://vote.local)
 
-Complete Swarm stack
+
+Docker Swarm
 -----
+
+Alternately, if you want to run it on a [Docker Swarm](https://docs.docker.com/engine/swarm/), first make sure you have a swarm. If you don't, run:
 
 Follow this guide to provision a local but complete environment [Local Docker Swarm](./SWARM.md).
 
@@ -57,6 +55,12 @@ docker-machine create --driver virtualbox poc-worker2
 docker-machine ssh poc-worker1 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
 docker-machine ssh poc-worker2 "docker swarm join --token `docker $(docker-machine config poc-manager) swarm join-token worker -q` $(docker-machine ip poc-manager)"
 ```
+
+Once you have your swarm, in this directory run:
+```
+docker stack deploy --compose-file docker-stack.yml demo
+```
+
 
 Architecture
 -----
