@@ -68,4 +68,8 @@ docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_resul
 docker service update -d --rollback poc_result
 ```
 
+# Delete the stack
+```
+docker-machine ssh poc-manager "docker stack rm poc"
+```
 
