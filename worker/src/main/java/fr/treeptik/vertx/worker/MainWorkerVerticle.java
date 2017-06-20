@@ -63,32 +63,6 @@ public class MainWorkerVerticle extends AbstractVerticle {
             }
         });
 
-        HealthCheckHandler handler = HealthCheckHandler.create(vertx);
-        // Add a handler for redis. Needed with HEALTHCHECK command from Docker
-        redis = RedisClient.create(vertx, new RedisOptions().setHost(redisHost));
-        handler.register("redis",
-                future -> {
-                    final String echoTest = "Y a degun ?";
-                    redis.echo(echoTest, echo -> {
-                        if (!echoTest.equalsIgnoreCase(echo.result())) {
-                            future.fail(echo.cause());
-                        } else {
-                            future.complete(Status.OK());
-                        }
-                    });
-                });
-        // Add a handler for Postgres. Needed with HEALTHCHECK command from Docker
-        handler.register("database",
-            future -> postgreSQLClient.getConnection(connection -> {
-                if (connection.failed()) {
-                    future.fail(connection.cause());
-                } else {
-                    connection.result().close();
-                    future.complete(Status.OK());
-                }
-            }));
-        router.get("/health").handler(handler);
-
         // Get the votes from Redis
         gatherVotes();
     }
@@ -113,10 +87,12 @@ public class MainWorkerVerticle extends AbstractVerticle {
                       logger.info("Insert vote: " + insertResult.getUpdated());
                   } else {
                       logger.error("Error insert vote " + insertRes.cause());
+                      vertx.close();
                   }
                });
            } else {
                logger.error("Error delete previous vote " + res.cause());
+               vertx.close();
            }
         });
 
@@ -136,6 +112,7 @@ public class MainWorkerVerticle extends AbstractVerticle {
                     }
                 } else {
                     logger.error("Connection or Operation Failed " + res.cause());
+                    vertx.close();
                 }
             });
 

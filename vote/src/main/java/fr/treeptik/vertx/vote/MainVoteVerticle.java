@@ -85,7 +85,7 @@ public class MainVoteVerticle extends AbstractVerticle {
                     final String echoTest = "Y a degun ?";
                     redisClient.echo(echoTest, echo -> {
                         if (!echoTest.equalsIgnoreCase(echo.result())) {
-                            future.fail(echo.cause());
+                            future.complete(Status.KO());
                         } else {
                             future.complete(Status.OK());
                         }
