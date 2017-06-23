@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:8u131
 
 ENV VERTICLE_FILE ${project.artifactId}-fatboyslim.jar
 
@@ -19,7 +19,8 @@ HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
 # Launch the verticle
 WORKDIR $VERTICLE_HOME
 ENTRYPOINT ["sh", "-c"]
-CMD ["exec java -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.Log4j2LogDelegateFactory \
+CMD ["exec java -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 \
+                -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.Log4j2LogDelegateFactory \
                 -Dvertx.disableDnsResolver=true \
                 -jar $VERTICLE_FILE \
                 --conf $VERTICLE_CONF"]
