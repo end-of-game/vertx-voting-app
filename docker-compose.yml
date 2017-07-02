@@ -31,7 +31,7 @@ services:
     depends_on:
       - redis
     networks:
-      - front-tier
+        - front-tier
     labels:
       - "traefik.frontend.entryPoints=http"
       - "traefik.backend=vote"

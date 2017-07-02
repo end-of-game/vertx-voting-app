@@ -41,7 +41,7 @@ services:
       placement:
         constraints: [node.role != manager]
       replicas: 1
-      update_config:
+        update_config:
         parallelism: 2
         delay: 10s
       restart_policy:
@@ -50,7 +50,7 @@ services:
         max_attempts: 3
 
   result:
-    image: "vertxswarm/verticle-result:latest"
+    image: "vertxswarm/verticle-result:1.2.0-RELEASE"
     ports:
       - 8081:8081
     environment:

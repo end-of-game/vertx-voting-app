@@ -37,7 +37,7 @@ docker-machine scp ./docker-stack.yml poc-manager:/home/docker/.
 
 # Deploy the application
 ```
-docker-machine ssh poc-manager "docker stack deploy --compose-file docker-stack.yml poc"
+docker-machine ssh poc-manager "do"
 ```
 
 # Verify machines.
@@ -60,7 +60,7 @@ docker service update -d --replicas=10 poc_vote
 
 # Make a change and build image again and update the image
 ```
-docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE poc_result
+docker service update --image vertxswarm/verticle-result:1.2.0-RELEASE michelin_result
 ```
 
 # Oups we rollback
