@@ -10,8 +10,8 @@ docker-machine create --driver digitalocean --digitalocean-access-token $TOKEN -
 # Promote manager.
 docker-machine ssh do-manager "docker swarm init --advertise-addr $(docker-machine ip do-manager)"
 
-docker-machine ssh do_manager "docker network create --driver=overlay --attachable=false traefik-net"
-docker-machine ssh do_manager "docker service create \
+#docker-machine ssh do-manager "docker network create --driver=overlay --attachable=true traefik-net"
+docker-machine ssh do-manager "docker service create \
     --name traefik \
     --constraint=node.role==manager \
     --publish 80:80 --publish 9090:8080 \
@@ -37,5 +37,5 @@ docker-machine ssh do-worker2 "docker swarm join --token `docker $(docker-machin
 docker-machine scp ./docker-stack-traefik.yml do-manager:/root
 
 # Deploy the stack
-docker-machine ssh do-manager "docker stack deploy --compose-file docker-stack-official.yml do"
+docker-machine ssh do-manager "docker stack deploy --compose-file docker-stack-traefik.yml do"
 

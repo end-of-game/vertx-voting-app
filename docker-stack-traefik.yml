@@ -5,7 +5,7 @@ services:
   redis:
     image: redis:3.0.7-alpine
     environment:
-      - TZ=${TZ}
+      - TZ=Europe/Paris
     networks:
       - front-tier
     deploy:
@@ -18,7 +18,7 @@ services:
     image: postgres:9.6-alpine
     environment:
       - POSTGRES_USER=postgres
-      - TZ=${TZ}
+      - TZ=Europe/Paris
     volumes:
       - "db-data:/var/lib/postgresql/data"
     networks:
@@ -30,7 +30,7 @@ services:
   vote:
     image: "vertxswarm/verticle-vote:1.0.0-RELEASE"
     environment:
-      - TZ=${TZ}
+      - TZ=Europe/Paris
     depends_on:
       - redis
     networks:
@@ -48,15 +48,14 @@ services:
         delay: 5s
         max_attempts: 3
       labels:
-        - "traefik.frontend.entryPoints=http"
-        - "traefik.backend=vote"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:vote.traefik"
         - "traefik.port=8080"
-        - "traefik.frontend.rule=Host:do-vote.traefik"
 
   result:
     image: "vertxswarm/verticle-result:1.0.0-RELEASE"
     environment:
-      - TZ=${TZ}
+      - TZ=Europe/Paris
     depends_on:
       - postgres
     networks:
@@ -64,10 +63,10 @@ services:
       - traefik-net
     deploy:
       labels:
-        - "traefik.frontend.entryPoints=http"
-        - "traefik.backend=result"
-        - "traefik.port=8080"
-        - "traefik.frontend.rule=Host:do-result.traefik"
+        - "traefik.docker.network=traefik-net"
+        - "traefik.frontend.rule=Host:result.traefik"
+        - "traefik.port=8081"
+        #- "traefik.frontend.rule=Host:result.traefik"
       placement:
         constraints: [node.role != manager]
       replicas: 1
@@ -82,7 +81,7 @@ services:
   worker:
     image: "vertxswarm/verticle-worker:latest"
     environment:
-      - TZ=${TZ}
+      - TZ=Europe/Paris
     depends_on:
       - postgres
       - redis
@@ -115,14 +114,18 @@ services:
       - "portainer-data:/data"
     command: --no-auth
     deploy:
-      deploy:
-        labels:
-          - "traefik.frontend.entryPoints=http"
-          - "traefik.backend=portainer"
-          - "traefik.port=9000"
-          - "traefik.frontend.rule=Host:portainer.traefik"
+      labels:
+        - "traefik.port=9000"
       placement:
         constraints: [node.role == manager]
+
+  whoami0:
+    image: containous/whoami
+    deploy:
+      labels:
+        - "traefik.port=80"
+    networks:
+      - traefik-net
 
 volumes:
   db-data:
