@@ -48,6 +48,12 @@ services:
         condition: any
         delay: 5s
         max_attempts: 3
+      labels:
+        - "traefik.frontend.entryPoints=http"
+        - "traefik.backend=vote"
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:do-vote.traefik"
+        - "traefik.docker.network=traefik-net"
 
   result:
     image: "vertxswarm/verticle-result:1.0.0-RELEASE"
@@ -120,4 +126,6 @@ volumes:
 networks:
   front-tier:
   back-tier:
+  traefik-net:
+    external: true
 
