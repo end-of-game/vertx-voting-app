@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>verticle-vote</artifactId>
   <groupId>io.vertx.vote</groupId>
-  <version>1.0.0-RELEASE</version>
+  <version>1.1.0-RELEASE</version>
 
   <parent>
     <groupId>io.vertx.starter</groupId>

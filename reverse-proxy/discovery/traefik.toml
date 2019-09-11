@@ -1,7 +1,14 @@
 defaultEntryPoints = ["http"]
-[web]
-  address = ":8080"
 
 [entryPoints]
+
   [entryPoints.http]
-  address = ":8081"
+  address = ":80"
+
+  [entryPoints.https]
+  address = ":443"
+
+    [entryPoints.https.tls]
+      [[entryPoints.https.tls.certificates]]
+      certFile = "/certs/traefik.crt"
+      keyFile = "/certs/traefik.key"

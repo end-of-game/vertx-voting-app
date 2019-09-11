@@ -29,14 +29,13 @@ services:
 
   vote:
     image: "vertxswarm/verticle-vote:1.0.0-RELEASE"
-    ports:
-      - 8080:8080
     environment:
       - TZ=${TZ}
     depends_on:
       - redis
     networks:
       - front-tier
+      - traefik-net
     deploy:
       placement:
         constraints: [node.role != manager]
@@ -48,18 +47,27 @@ services:
         condition: any
         delay: 5s
         max_attempts: 3
+      labels:
+        - "traefik.frontend.entryPoints=http"
+        - "traefik.backend=vote"
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:do-vote.traefik"
 
   result:
     image: "vertxswarm/verticle-result:1.0.0-RELEASE"
-    ports:
-      - 8081:8081
     environment:
       - TZ=${TZ}
     depends_on:
       - postgres
     networks:
       - back-tier
+      - traefik-net
     deploy:
+      labels:
+        - "traefik.frontend.entryPoints=http"
+        - "traefik.backend=result"
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:do-result.traefik"
       placement:
         constraints: [node.role != manager]
       replicas: 1
@@ -100,16 +108,19 @@ services:
       placement:
         constraints: [node.role == manager]
 
-  # docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer --no-auth
   portainer:
     image: portainer/portainer
-    ports:
-    - 9000:9000
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "portainer-data:/data"
     command: --no-auth
     deploy:
+      deploy:
+        labels:
+          - "traefik.frontend.entryPoints=http"
+          - "traefik.backend=portainer"
+          - "traefik.port=9000"
+          - "traefik.frontend.rule=Host:portainer.traefik"
       placement:
         constraints: [node.role == manager]
 
@@ -120,4 +131,6 @@ volumes:
 networks:
   front-tier:
   back-tier:
+  traefik-net:
+    external: true
 

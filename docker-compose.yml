@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 
 services:
 
@@ -6,6 +6,7 @@ services:
     image: redis:3-alpine
     environment:
       - TZ=${TZ}
+      - MYKEY=${MYVALUE}
     ports: ["6379:6379"]
     networks:
       - front-tier
@@ -29,7 +30,8 @@ services:
       - TZ=${TZ}
     restart: always
     depends_on:
-      - redis
+      - condition : redis
+        - healthy
     networks:
         - front-tier
     labels:
