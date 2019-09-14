@@ -10,7 +10,7 @@ docker-machine create --driver digitalocean --digitalocean-access-token $TOKEN -
 # Promote manager.
 docker-machine ssh do-manager "docker swarm init --advertise-addr $(docker-machine ip do-manager)"
 
-#docker-machine ssh do-manager "docker network create --driver=overlay --attachable=true traefik-net"
+docker-machine ssh do-manager "docker network create --driver=overlay --attachable=true traefik-net"
 docker-machine ssh do-manager "docker service create \
     --name traefik \
     --constraint=node.role==manager \
